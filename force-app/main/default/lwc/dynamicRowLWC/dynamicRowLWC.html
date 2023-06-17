@@ -1,0 +1,79 @@
+<!--
+
+<aura:component >    
+    <aura:attribute name="objectInstance" type="Custom_Object__c"/>
+    <aura:attribute name="rowIndex" type="String"/>
+
+    <aura:registerEvent name="DeleteRowEvent" type="c:DeleteRowEvent"/> 
+    <aura:registerEvent name="AddRowEvent" type="c:AddNewRowEvent"/> 
+    
+    <tr class="slds-text-title_caps">
+        <td> 
+            {!v.rowIndex + 1}
+        </td>
+        <td>	
+            <ui:inputText class="slds-input" value="{!v.objectInstance.Name}"/>
+        </td>
+        <td>
+            <ui:inputText class="slds-input" value="{!v.objectInstance.Field_1__c}"/>
+        </td>
+        <td>
+            <ui:inputText class="slds-input" value="{!v.objectInstance.Field_2__c}"/>
+        </td>
+        <td>
+            <aura:if isTrue="{!v.rowIndex == 0}">
+                <a onclick="{!c.AddNewRow}">
+                  <lightning:icon iconName="utility:add" class="slds-icon slds-icon_small" size="small" alternativeText="add"/>
+                  <span class="slds-assistive-text">Add Icon</span>
+                </a>    
+              <aura:set attribute="else">
+                  <a onclick="{!c.removeRow}">
+                   <lightning:icon variant="error" iconName="utility:delete" class="slds-icon slds-icon_small" size="small" alternativeText="icon"/>
+                   <span class="slds-assistive-text">Delete Icon</span>
+                  </a>
+              </aura:set> 
+            </aura:if>
+        </td> 
+    </tr>
+</aura:component> -->
+
+
+<template>
+    {objectInstance.Field_1__c}
+    <tr class="slds-text-title_caps">
+
+        <td>	
+            <lightning-input label="Name" name="Name" type="text" class="slds-input" 
+            value={objectInstance.Name} onchange={handleFieldChangeChild}
+            data-index={index}></lightning-input>
+        </td>
+        <td>
+            <lightning-input label="Field 1" name="Field_1__c" type="text" class="slds-input" 
+            value={objectInstance.Field_1__c} onchange={handleFieldChangeChild}
+            data-index={index}></lightning-input>       
+        </td>
+        <td>
+            <lightning-input label="Field 2a" name="Field_2__c" type="text" class="slds-input" 
+            value={objectInstance.Field_2__c} onchange={handleFieldChangeChild}
+            data-index={index}></lightning-input> 
+        </td>
+        <td>
+
+
+                <a onclick={addNewRowChild}>
+                    <lightning-icon icon-name="utility:add" class="slds-icon slds-icon_small" 
+                    size="small" alternative-text="add"></lightning-icon>
+                    <span class="slds-assistive-text">Add Icon</span>
+                </a>   
+
+
+                <a onclick={removeRowChild}>
+                    <lightning-icon variant="error" icon-name="utility:delete" class="slds-icon slds-icon_small" 
+                    size="small" alternative-text="icon" data-index={index}></lightning-icon>
+                    <span class="slds-assistive-text">Delete Icon</span>
+                </a>
+
+        </td> 
+    </tr>
+
+</template>

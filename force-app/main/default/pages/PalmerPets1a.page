@@ -1,0 +1,63 @@
+<apex:page standardController="contact" showheader="false" extensions="PPe2">
+    <apex:form >  
+    
+           <apex:outputLabel value="Deal Viewer"></apex:outputLabel><br/>
+           <b>{!contact.name}</b><br/>
+           
+     
+
+        <apex:pageBlock >    
+        
+            <apex:commandButton value="Done" action="{!backtocont}"/>
+           
+            <apex:pageBlockSection title="Total Deal Summary">
+            
+                <apex:outputfield value="{!contact.Acceptance_Rate__c}"/>
+                <apex:outputfield value="{!contact.Deals_Accepted__c}"/>
+                <apex:outputfield value="{!contact.Deals_Rejected__c}"/>
+                                      
+            </apex:pageBlockSection>
+             
+            <apex:pageBlockSection title="Deals">
+            
+                <apex:pageBlockTable value="{!mydata}" var="d">        
+         
+                    <apex:column headerValue="Action">
+                    
+                        <apex:commandlink action="{!accept}">
+                            <apex:commandButton value="Accept" disabled="{!not(d.buttonstatus)}"/>
+                            <apex:param name="ix" value="{!d.de.id}"/> 
+                        </apex:commandlink>
+                        
+                        <apex:commandlink action="{!reject}">
+                            <apex:commandButton value="Reject" disabled="{!not(d.buttonstatus)}"/>
+                            <apex:param name="ix" value="{!d.de.id}"/> 
+                        </apex:commandlink>
+                        
+                    </apex:column> 
+                    
+                    <apex:column headerValue="Status" value="{!d.imagestatus}"/>
+
+                                                        
+                    <apex:column headerValue="Icon">
+                        <apex:image url="{!d.imageurl}" width="50" height="50" rendered="{!d.v}"/>
+                        <apex:image url="{!URLFOR($Resource.Asset1,'Images/GenericFish.jpg')}" width="50" height="50" rendered="{!not(d.v)}"/> 
+                    </apex:column>  
+                                                                            
+                    <apex:column headerValue="Deal Name" value="{!d.de.name}"/>
+                    <apex:column headerValue="Valid Through" value="{!d.de.Valid_Through__c}"/>
+                    <apex:column headerValue="Available Deals" value="{!d.de.Available_Deals__c}"/>                                                            
+                    
+                </apex:pageBlockTable>
+              </apex:pageBlockSection>
+              
+        <apex:commandButton action="{!Beginning}" title="Beginning" value="<< First" disabled="{!disablePrevious}" />
+        <apex:commandButton action="{!Previous}" title="Previous" value="< Previous" disabled="{!disablePrevious}" />      
+        <apex:outputLabel value="Page {!pagenumber} of {!totalpages}"></apex:outputLabel>  
+        <apex:commandButton action="{!Next}" title="Next" value="Next >" disabled="{!disableNext}"/>
+        <apex:commandButton action="{!End}" title="End" value="Last >>" disabled="{!disableNext}"/>     
+                                                        
+        </apex:pageBlock> 
+                             
+    </apex:form>
+</apex:page>

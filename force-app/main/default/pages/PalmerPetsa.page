@@ -1,0 +1,32 @@
+<apex:page standardController="contact" showHeader="false" extensions="PPe1">
+  
+  <apex:form >
+  
+      <apex:pageBlock title="Contact Detail" >
+      
+               <apex:pageBlockButtons >
+               
+                   <apex:commandButton value="Edit"/>
+                  <apex:commandButton value="Delete"/>
+                  <apex:commandButton value="Deal Viewer" action="{!send}">                 
+                      <apex:param name="id" value="{!contact.id}"/>               
+                  </apex:commandButton>
+
+               
+               </apex:pageBlockButtons>
+               
+                    
+          <apex:pageBlockSection collapsible="false">
+                          
+              <apex:outputfield value="{!contact.name}"/>
+              <apex:outputfield value="{!contact.Acceptance_Rate__c}"/>
+              <apex:outputfield value="{!contact.Owner.name}" />
+              <apex:outputfield value="{!contact.Deals_Accepted__c}"/>
+              <apex:outputfield value="{!contact.Account.name}"/>
+              <apex:outputfield value="{!contact.Deals_Rejected__c}"/>
+    
+          </apex:pageBlockSection>  
+      </apex:pageBlock> 
+  </apex:form>
+   
+</apex:page>

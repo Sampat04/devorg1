@@ -1,0 +1,5 @@
+<apex:page standardController="Account" extensions="Assignment3a">
+
+  {!str}
+  
+</apex:page>

@@ -1,0 +1,11 @@
+<template>
+
+    <lightning-card  variant="Narrow"  title="LWC component to display accounts & contacts" icon-name="standard:account">
+        <template if:true={loadedInt}>
+            <template for:each={recordWrapper} for:item="con">
+                {con.recordId} | {con.name}
+            </template>
+        </template>
+    </lightning-card>
+    
+</template>

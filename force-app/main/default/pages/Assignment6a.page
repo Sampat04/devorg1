@@ -1,0 +1,28 @@
+<apex:page controller="A6a">
+<apex:form >
+    
+    <apex:actionFunction action="{!getpopulate}" name="sel"/>
+    <apex:pageBlock >
+         
+   Select the Alphabet:
+   <apex:selectList value="{!country1}" size="1" onchange="javascfunc()">
+       <apex:selectOptions value="{!items1}"/>               
+   </apex:selectList>
+   <br/>
+   
+    Select the Fruit:
+    <apex:selectList value="{!country2}" size="1" >
+        <apex:selectOptions value="{!items2}" />           
+   </apex:selectList>
+
+    </apex:pageBlock>
+       
+    <script>   
+        function javascfunc()
+        {
+            sel();
+        }   
+    </script>
+    
+</apex:form>
+</apex:page>

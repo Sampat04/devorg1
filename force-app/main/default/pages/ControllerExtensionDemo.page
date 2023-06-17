@@ -1,0 +1,22 @@
+<apex:page standardController="account" extensions="myControllerExtensions">
+  
+  {!greeting};
+  
+  <apex:pageBlock >
+  
+      <apex:pageBlockSection >
+          
+          {!account.name}
+      
+      </apex:pageBlockSection>
+      
+      <apex:pageBlockSection rendered="false">
+          
+          {!account.type}
+      
+      </apex:pageBlockSection>
+  
+  </apex:pageBlock>
+  
+  
+</apex:page>

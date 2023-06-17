@@ -1,0 +1,31 @@
+<apex:page controller="Custom2bb">
+<apex:form >
+
+<apex:pageBlock >
+   <!--     <apex:detail subject="{!$CurrentPage.parameters.cid}"/> -->
+        <apex:inputField value="{!Employee.FName__c}"/> <br/> 
+        <apex:inputField value="{!Employee.Country__c}"/> <br/>
+        <apex:inputField value="{!Employee.State__c}"/> <br/>
+
+
+    <apex:outputText value="{!$CurrentPage.parameters.cid}"> <br/>
+    </apex:outputText>
+    
+    <apex:pageBlockButtons >
+            <apex:commandButton value="Back" action="{!save}"/>
+            <apex:commandButton value="Save" action="{!save1}"/>
+    </apex:pageBlockButtons>
+    
+    <apex:pageBlockSection >    
+    <apex:outputField value="{!Employee.FName__c}"/> <br/> 
+    <apex:outputField value="{!Employee.Country__c}"/> <br/>
+    <apex:outputField value="{!Employee.State__c}"/> <br/>
+    </apex:pageBlockSection>
+
+   
+</apex:pageBlock>
+
+ 
+
+</apex:form> 
+</apex:page>

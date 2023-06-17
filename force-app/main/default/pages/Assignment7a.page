@@ -1,0 +1,57 @@
+<apex:page controller="Assignment7aConta">
+<apex:form >
+    
+    <apex:pageBlock >
+    
+        <apex:pageBlockButtons >
+            <apex:commandButton value="Show Values" action="{!save}" />
+        </apex:pageBlockButtons>
+    
+    
+      
+   Countries :
+   <apex:selectList value="{!country1}" size="1">
+       <apex:selectOptions value="{!items1}"/>               
+   </apex:selectList>
+    <br/>
+   
+   
+    Gender :
+   <apex:selectRadio value="{!country}" >
+            <apex:selectOptions value="{!items}"/>          
+    </apex:selectRadio>
+ 
+    <br/>
+
+    Hobbies :
+    <apex:selectList value="{!country2}" size="1">
+       <apex:selectOptions value="{!items2}"/>           
+   </apex:selectList>
+
+    </apex:pageBlock>
+
+    
+    <apex:pageBlock >
+    
+    <br/>
+    <br/>
+    
+    Selected country:
+    <apex:outputText value="{!country1}" ></apex:outputText>
+    -->
+    Selected Hobbies:
+    <apex:outputText value="{!country}" ></apex:outputText>
+    Gender: -->
+    <apex:outputText value="{!country2}" ></apex:outputText>
+
+
+    
+    
+    </apex:pageBlock>
+        
+        
+  
+
+
+</apex:form>
+</apex:page>

@@ -1,0 +1,11 @@
+<apex:page controller="StudentController">
+    {!student}
+    {!studlist}
+    
+    <apex:outputLink >
+        <apex:repeat value="{!studlist}" var="s1">
+            {!s1}<br/>
+        </apex:repeat>
+    </apex:outputLink>
+    
+</apex:page>

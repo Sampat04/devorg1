@@ -1,0 +1,10 @@
+<apex:page standardStylesheets="false">
+ <!-- <apex:image url="{!URLFOR($Resource.TestZip, thZ9VZXOY6/thZ9VZXOY6.jpg)}" height="80" width="80"/> -->
+ 
+ <apex:stylesheet value="{!$Resource.Testcss}"/>
+ <apex:outputText value="Style text from sample class" styleClass="sample"></apex:outputText>
+  
+  
+  
+  
+</apex:page>

@@ -1,0 +1,79 @@
+<!--
+<aura:component controller="AddDeleteRowController" Implements="flexipage:availableForRecordHome,force:hasRecordId">
+    
+<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+
+<aura:handler name="DeleteRowEvent" event="c:DeleteRowEvent" action="{!c.removeDeletedRow}"/>
+<aura:handler name="AddRowEvent" event="c:AddNewRowEvent" action="{!c.addNewRow}"/>
+
+    
+<aura:attribute name="objectList" type="Custom_Object__c[]"/> 
+
+<lightning:card title="Add Rows Dynamically" iconName="standard:action_list_component">
+    <aura:set attribute="actions">
+            <button class="slds-button slds-button_brand" onclick="{!c.Save}">Save</button>
+    </aura:set>
+</lightning:card>
+        
+            
+<table class="slds-table slds-table_bordered slds-table_cell-buffer"> 
+    <thead>
+        <tr class="slds-text-title_caps">
+            <th scope="col">
+                <div class="slds-truncate">Sr. No</div>
+            </th>
+            <th scope="col">
+                <div class="slds-truncate" title="Name">Name</div>
+            </th>
+            <th scope="col">
+                <div class="slds-truncate" title="Field 1">Field 1</div>
+            </th>
+            <th scope="col">
+                <div class="slds-truncate" title="Field 2">Field 2</div>
+            </th>
+        </tr>
+    </thead>   
+    <tbody>       
+            <aura:iteration items="{!v.objectList}" var="item" indexVar="index">
+            <c:DynamicRow objectInstance="{!item}" rowIndex="{!index}" />
+        </aura:iteration>
+    </tbody>
+</table>
+</aura:component>       -->
+
+<template>
+
+<lightning-card  title="Add Rows Dynamically Test1" icon-name="standard:action_list_component">
+    <lightning-button class="slds-button slds-button_brand" 
+                label="Save" onclick={save}></lightning-button>
+
+                {objectList2}
+<table class="slds-table slds-table_bordered slds-table_cell-buffer"> 
+    <thead>
+        <tr>
+            
+        </tr>
+    </thead>   
+    <tbody>  
+        
+        <template for:each={objectList} for:item='item' for:index='index'>
+            <template if:true={reloadList}>
+                <c-dynamic-row-l-w-c key={item.Name} 
+                onadd={addNewRowParent} onremove={removeRowParent} onupdater={handleFieldChangeParent}
+                index={index} object-instance={objectList}>
+                </c-dynamic-row-l-w-c>
+            </template>
+        </template>
+        <template for:each={objectList} for:item='item' for:index='index'>
+            <template if:true={reloadList}>
+                <c-dynamic-row-l-w-c key={item.Name} 
+                onadd={addNewRowParent} onremove={removeRowParent} onupdater={handleFieldChangeParent}
+                index={index} object-instance={objectList}>
+                </c-dynamic-row-l-w-c>
+            </template>
+        </template>
+    </tbody>
+</table>
+</lightning-card>
+</template>

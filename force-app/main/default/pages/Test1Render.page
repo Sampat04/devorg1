@@ -1,0 +1,32 @@
+<apex:page standardController="contact" extensions="testrender">
+  
+  <apex:form >
+  <apex:pageBlock >
+  
+      <apex:pageBlockSection title="section 1" id="s1">
+      
+      
+          <apex:outputField value="{!c.name}"/>
+          <apex:outputField value="{!c.email}"/>
+          <apex:outputText label="Date" value="{!favDate}" />
+      
+      
+      </apex:pageBlockSection>
+  
+  
+      <apex:pageBlockSection title="section 2" id="s2">
+      
+          <apex:outputField value="{!c.phone}"/>
+          <apex:outputText label="Date" value="{!c.birthdate}"/>
+          <apex:outputField value="{!c.assistantname}"/>
+      
+      
+      </apex:pageBlockSection>
+      
+      <apex:commandButton value="Section 1" action="{!func1}" reRender="s1"/>
+      <apex:commandButton value="Section 2" action="{!func1}" reRender="s2"/>
+
+   
+  </apex:pageBlock>
+  </apex:form>
+</apex:page>

@@ -1,0 +1,20 @@
+<apex:page standardController="account" recordSetVar="acc">
+<apex:form >
+
+    <apex:pageBlock >
+    
+        <apex:pageBlockTable value="{!acc}" var="a">
+        
+            <apex:column value="{!a.name}"/>
+            <apex:column value="{!a.contacts}"/>
+              
+        
+        </apex:pageBlockTable>
+        
+        <apex:commandLink action="{!Previous}" value="PreviousX" rendered="{!HasPrevious}"/>
+        <apex:commandLink action="{!Next}" value="NextX" rendered="{!HasNext}"/>
+    
+    </apex:pageBlock>
+ </apex:form>
+
+</apex:page>

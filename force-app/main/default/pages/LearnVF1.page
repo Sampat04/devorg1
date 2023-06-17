@@ -1,0 +1,14 @@
+<apex:page controller="Learn1">
+    <apex:pageBlock >
+        <apex:pageBlockTable value="{!actsqq}" var="a">
+            
+                <apex:column value="{!a.NaME}"/>
+            <apex:column value="{!a.TYpe}"/>
+            <apex:column value="{!a.fax}"/>
+            <apex:column value="{!a.INduSTry}"/>
+            <apex:column value="{!a.phone}"/>
+            
+            
+        </apex:pageBlockTable>    
+    </apex:pageBlock>   
+</apex:page>

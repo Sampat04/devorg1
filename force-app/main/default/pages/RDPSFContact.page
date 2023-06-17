@@ -1,0 +1,262 @@
+<apex:page renderAs="advanced_pdf" showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false"
+    standardController="Milestone1_Project__c" extensions="Rdpsf_Controller3">
+    <!-- renderAs="advanced_pdf" -->
+    <html>
+
+    <head>
+        <style type="text/css">
+            @page {
+                /*size: A4 landscape;*/
+                margin: 7mm;
+                border: 0.7px solid black;
+                padding-around: 5px;
+                padding-top: 5px;
+            }
+
+            @page {
+                @top-center {
+                    content: "{!project.Name}";
+                    font-size: 12px;
+                    color: #595959;
+                    font-family: Arial, Helvetica, sans-serif;
+                }
+
+                @top-left {
+                    content: element(pageHeader);
+                }
+
+                @bottom-left {
+                    content: "Page " counter(page) " of " counter(pages);
+                    font-size: 10px;
+                    color: #595959;
+                    font-family: Arial, Helvetica, sans-serif;
+                }
+            }
+
+            @page: last {
+                display: none
+            }
+
+            table {
+                border: 0.5px solid black;
+                border-collapse: collapse !important;
+                width: 100%;
+                -fs-table-paginate: paginate;
+                border-spacing: 0;
+            }
+
+            th {
+                border: 0.5px solid black;
+                border-collapse: collapse !important;
+                font-weight: bold;
+                text-align: left;
+                color: black;
+                padding: 5px;
+                background-color: #65C4B3;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 10px;
+            }
+
+            /* <!--#66b3ff--> */
+
+            td {
+                border: 0.5px solid black;
+                border-collapse: collapse !important;
+                padding: 5px;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 10px;
+            }
+
+            tr,
+            .tr_pagebreak {
+                page-break-inside: avoid;
+                page-break-after: auto;
+            }
+
+            .page-break {
+                display: block;
+                page-break-after: always;
+            }
+
+            .tdBold {
+                font-weight: bold;
+                text-align: left;
+                vertical-align: baseline;
+            }
+
+            .irTable {
+                width: 100%;
+                border-collapse: collapse !important;
+            }
+
+            .irTableth {
+                border-collapse: collapse !important;
+                padding-around: 2px;
+                height: auto;
+                /* min-width: 65px; */
+                width: 65px;
+                text-align: center;
+            }
+
+            .irTabletd {
+                border-collapse: collapse !important;
+                padding-around: 2px;
+                width: 12px;
+                height: 12px;
+                text-align: right;
+            }
+
+            .TieTableth {
+                text-align: center;
+            }
+
+            .TieTabletd {
+                text-align: right;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            h4 {
+                font-size: 14px;
+            }
+
+            h5 {
+                font-size: 12px;
+            }
+
+            #pageHeader {
+                position: running(pageHeader);
+                padding-top: 3px;
+                padding-bottom: 3px;
+                padding-left: 10px;
+
+            }
+
+            .orange {
+                background: orange;
+            }
+
+            .green {
+                background: green;
+            }
+            
+            .Green {
+            background: #85ff7a;
+            }
+            
+            .Grey {
+            background: #bcbcbc;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="pageHeader">
+            <img src="{!URLFOR($Resource.optum_logo_watermark)}" width="75px" height="20px" />
+        </div>
+
+        <div>
+            <h2 style="color:#000000; font-family: Arial, Helvetica, sans-serif; padding-left : 10px;">Project / PSF Details -</h2>
+        </div>
+        
+        <apex:pageBlock >
+            <apex:pageBlockTable style="margin-bottom : 15px;" value="{!projectFieldsForUI}" var="projFld" columns="2">
+                <apex:column headerValue="Field Name" style="font-weight:bold;" width="30%" value="{!projectFieldNameMap[projFld.apiName]}" />
+                <apex:column headerValue="Value" width="70%" value="{!projectInfoMap[projFld.apiName]}"/>
+            </apex:pageBlockTable>
+            <td width="30%" class="tdBold">Description</td><td><apex:outputText escape="false" value="{!Milestone1_Project__c.Description2__c}"></apex:outputText></td>
+        </apex:pageBlock>
+        <div class="page-break"/>
+
+        <!-- Provider Section -->
+        <div class="{!IF(providerWrapper.size >0 , 'page-break', '') }" />
+        <apex:pageBlock html-style="{!IF(providerWrapper.size >0, '', 'display: none;') }">
+            <apex:variable var="cnt" value="{!0}" />
+            <div>
+                <h2 style="color:#000000; font-family: Arial, Helvetica, sans-serif; padding-left:10px;">Providers Information - </h2>
+            </div>
+            <apex:repeat value="{!providerWrapper}" var="prowrap" id="providersRepeat">
+                <div style="{!if(cnt < 1, 'page-break-before:avoid;','page-break-before:always;')}">
+                    <apex:variable var="cnt" value="{!cnt+1}" />
+                    <apex:pageBlock >
+                        <div>
+                            <h4 style="font-family: Arial, Helvetica, sans-serif; padding-left : 10px;">{!prowrap.title} : </h4>
+                        </div>
+                        <div>
+                            <h5 style="font-family: Arial, Helvetica, sans-serif; padding-left : 10px;">IDX Setup Action - {!prowrap.title1}  </h5>
+                        </div>
+                        <table>
+                            <tr>
+                                <th style="text-align:center; border-bottom-style:none;" width="50%">Existing Provider Details</th>
+                                <th style="text-align:center; border-bottom-style:none;" width="50%">Updates to Provider Details</th>
+                            </tr>
+                            <apex:pageBlockTable style="margin-bottom : 15px" value="{!prowrap.data}" var="field" columns="4">
+                                <apex:column headerValue="Field Name" style="font-weight:bold;" width="25%" value="{!field.apiKey}" />
+                                <apex:column headerValue="Value" width="25%" value="{!field.value1}" />
+                                <apex:column headerValue="Field Name" style="font-weight:bold;" width="25%" value="{!field.apiKey}" />
+                                <apex:column headerValue="Value" width="25%" value="{!field.value2}" />
+                            </apex:pageBlockTable>
+                        </table>
+                    </apex:pageBlock>
+                </div>
+            </apex:repeat>
+        </apex:pageBlock>
+
+        
+        
+        <!-- RMS Grid TABLE START -->
+		<div style="{!IF(listOfDataLists.size > 0 , 'page-break-before:always;', 'display: none;') }">
+			<div>
+                <h2 style="font-family: Arial, Helvetica, sans-serif; padding-left : 10px;">RMS Status Worksheet</h2>
+            </div>
+
+    		<apex:variable value="{!-1}" var="count"/>
+            <div style="page-break">
+    		<apex:repeat value="{!listOfDataLists}" var="psfProv">
+                <apex:variable var="count" value="{!count+1}"/>
+                <div>
+                    <p style="font-family: Arial; font-size: 11px;">Provider : <b>{!providerNameList[count]}</b></p>
+                    <p style="font-family: Arial; font-size: 11px;">Vendor : <b>{!vendorNameList[count]}</b></p>
+                    <p style="font-family: Arial; font-size: 11px;">Version : <b>{!versionNameList[count]}</b></p>
+                </div>
+    
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                    <thead>
+                        <tr>
+                            <th class="slds-size_3-of-10" scope="col">
+                                <div class="slds-truncate" title="IPAs">Pod Name</div>
+                            </th>
+                            <apex:repeat value="{!listOfSpecLists[count]}" var="spec1">
+                                <th>{!spec1}</th>
+                            </apex:repeat>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <apex:repeat value="{!listOfDataLists[count]}" var="item">
+                            <tr class="slds-hint-parent">
+                                <td class="slds-size_3-of-10">
+                                    <div>
+                                        <apex:outputText value="{!item["Pod"]}" /> 
+                                    </div>
+                                </td>
+                                <apex:repeat value="{!item["Specs"]}" var="spec2">
+                                    <td class="{!spec2["ColorClass"]}">
+                                        <div>
+                                            <apex:outputText value="{!spec2["Status"]}"/>
+                                        </div>
+                                    </td>
+                                </apex:repeat>
+                            </tr>
+                        </apex:repeat>
+                    </tbody>
+                </table><br/>
+ 			</apex:repeat>
+            </div>
+        </div>
+        
+        
+        </body>
+    </html>
+</apex:page>

@@ -1,0 +1,29 @@
+<apex:page standardController="opportunity" recordSetVar="op">
+
+abcd
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockTable value="{!op}" var="con">
+        
+            <apex:column >
+                <apex:commandLink rerender="contactdetails">
+                    {!con.Name}
+                    <apex:param name="cid" value="{!con.id}"/>
+                </apex:commandLink>          
+            </apex:column>
+            
+               <apex:column value="{!con.name}"/> <br/>
+    <apex:column value="{!con.amount}"/> <br/>
+    <apex:column value="{!con.closedate}"/> <br/>            
+        </apex:pageBlockTable>
+
+        
+        
+        </apex:pageBlock>
+        
+        <apex:pageBlock id="contactdetails">
+        <apex:detail subject="{!$CurrentPage.parameters.cid}"/>   
+    </apex:pageBlock>
+
+    </apex:form>
+</apex:page>

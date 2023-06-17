@@ -1,0 +1,38 @@
+<apex:page standardController="opportunity">
+    <apex:form >
+        
+            <apex:pageBlock >
+            
+                <apex:pageBlockSection title="Basic Information">
+                
+                       <apex:inputField value="{!opportunity.name}"/><br/>
+                       
+                       <apex:inputField id="stage" value="{!opportunity.stagename}"> 
+                     
+                           <apex:actionSupport event="onchange" reRender="pgbl" status="myid"/>       
+                                               
+                       </apex:inputField>
+                       <br/>
+                      
+                       <apex:actionStatus startText="applying value" stopText="done" id="myid">                       
+                       </apex:actionStatus><br/>
+                       
+                       <apex:inputField value="{!opportunity.amount}"/><br/>
+                       <apex:inputField value="{!opportunity.closeDate}"/><br/>
+                                 
+                
+                </apex:pageBlockSection>
+                
+                               
+               <apex:pageBlockSection title="Closed Lost Information" id="pgbl">
+                
+                    <apex:inputField value="{!opportunity.Reason_Lost__c}" rendered="{!opportunity.stagename=='Closed Lost'}"/>
+
+                </apex:pageBlockSection>
+                         
+            </apex:pageBlock>
+        
+
+    </apex:form>  
+  
+</apex:page>

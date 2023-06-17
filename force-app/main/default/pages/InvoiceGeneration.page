@@ -1,0 +1,38 @@
+<apex:page standardController="Invoice__c" extensions="CPQ_Class" renderAs="pdf" applyBodyTag="false">
+    
+    <apex:pageBlock >
+        <apex:pageBlockSection title="Invoice" columns="1">
+            <apex:outputPanel >        
+                <table width="100%" border="1" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <th>Id</th>
+               <!--         <th>Product Name</th>
+                        <th>Quantity</th>
+                        <th>List Price</th>
+                        <th>Extended Price</th> -->
+                    </tr>
+                    
+                    <apex:repeat value="{!Info}" var="oi">
+                        <tr>
+                            <th>Id</th>
+             <!--               <td>{!oi.Product2.name}</td>
+                            <td>{!oi.Quantity}</td>
+                            <td>{!oi.ListPrice}</td>  
+                            <td>{!oi.TotalPrice}</td> -->
+                        </tr>
+                    </apex:repeat>
+                </table>
+            </apex:outputPanel> 
+      <!--      Total Price = {!Order.TotalAmount}   -->
+        </apex:pageBlockSection> 
+        
+        <!--
+    	<br/><br/>
+        <apex:outputText rendered="{!Order.Promo_Code_Discount__c>0}">
+        Promo Code = {!Order.Promo_Code__c}<br/>
+        Promo Code Discount = {!Order.Promo_Code_Discount__c}<br/>    
+        Total Price After Promo Code Discount = {!Order.Price_After_Promo_Code__c} 
+        </apex:outputText>
+        -->
+    </apex:pageBlock> 
+</apex:page>

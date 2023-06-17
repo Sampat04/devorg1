@@ -1,0 +1,610 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false" standardController="Milestone1_Project__c" extensions="PSFExtension">
+    <!-- renderAs="advanced_pdf" -->
+   <html>
+        <head>
+            <style type="text/css">
+                @page {
+                  /*size: A4 landscape;*/
+                    margin :7mm;
+                    border: 0.7px solid black;    
+                    padding-around : 5px;
+                    padding-top : 5px;
+                }
+
+                @page{
+                    @top-center {
+                        content : "{!project.Name}";
+                        font-size : 12px;
+                        color : #595959;
+                        font-family : Arial, Helvetica, sans-serif;
+                    }
+                
+                    @top-left{content: element(pageHeader);}
+                
+                    @bottom-left {
+                        content: "Page " counter(page) " of " counter(pages);
+                        font-size : 10px;
+                        color : #595959;
+                        font-family : Arial, Helvetica, sans-serif;
+                    }
+                }
+                
+                @page:last{display:none}
+                    
+                table {
+                    border: 0.5px solid black;
+                    border-collapse: collapse !important;
+                    width : 100%;
+                    -fs-table-paginate: paginate;
+                    border-spacing: 0;
+                }
+                
+                th {
+                    border : 0.5px solid black;
+                    border-collapse: collapse !important;
+                    font-weight: bold;
+                    text-align: left;
+                    color: black;
+                    padding: 5px;
+                    background-color:#65C4B3;
+                    font-family:Arial, Helvetica, sans-serif;
+                    font-size:10px;
+                }
+                /* <!--#66b3ff--> */
+                td {
+                    border: 0.5px solid black;
+                    border-collapse: collapse !important;
+                    padding: 5px;
+                    font-family:Arial, Helvetica, sans-serif;
+                    font-size:10px;
+                }
+                
+                tr, .tr_pagebreak { page-break-inside: avoid; 
+                    page-break-after: auto;
+                }
+                
+                .page-break {
+                    display:block;
+                    page-break-after:always;
+                }
+                
+                .tdBold{
+                    font-weight : bold;
+                    text-align: left;
+                    vertical-align: baseline;
+                }
+                
+                .irTable{
+                    width : 100%;
+                    border-collapse: collapse !important;
+                }
+                
+                .irTableth{
+                    border-collapse: collapse !important;
+                    padding-around: 2px;
+                    height:auto;
+                    /* min-width: 65px; */
+                    width:65px;
+                    text-align:center;
+                }
+                
+                .irTabletd{
+                    border-collapse: collapse !important;
+                    padding-around: 2px;
+                    width:12px;
+                    height:12px;
+                    text-align:right;
+                }
+                
+                .TieTableth{text-align:center;}
+                .TieTabletd{text-align:right;}
+
+                h2{ font-size : 20px;}
+                h4{ font-size : 14px;}
+                h5{ font-size : 12px;}
+                
+                #pageHeader{
+                    position:running(pageHeader);
+                    padding-top : 3px;
+                    padding-bottom : 3px;
+                    padding-left : 10px;
+                
+                }
+                
+                .orange{
+                background: orange;
+                }
+                .green{
+                background: green;
+                }
+                
+            </style>
+        </head>
+
+       <body>
+           <div id="pageHeader">
+               <img src="{!URLFOR($Resource.optum_logo_watermark)}" width="75px" height="20px"/>
+           </div>
+           
+           <div><h2 style="color:#000000; font-family: Arial, Helvetica, sans-serif; padding-left : 10px;">Project / PSF Details -</h2></div>
+           <table  style="width:100%">
+                <tr><th>Field Name</th><th>Value</th></tr>
+                <tr><td class="tdBold">Project Name</td><td>{!Milestone1_Project__c.Name}</td></tr>
+                <tr><td class="tdBold">Agreement Name</td><td>{!Milestone1_Project__c.Agreement__r.Name}</td></tr>
+                <tr><td class="tdBold">Contract Replacement</td><td>{!Milestone1_Project__c.Contract_Replacement__c}</td></tr>
+				<tr><td class="tdBold">Specialty</td><td>{!Milestone1_Project__c.Specialty_gpl__c}</td></tr>
+                <tr><td class="tdBold">Type Of Change</td><td>{!Milestone1_Project__c.Type_of_Change__c}</td></tr>
+                <tr style="{!IF(Milestone1_Project__c.Agreement__r.Agreement_Type__c == 'A & A', '', 'display:none;')}">
+                    <td class="tdBold">From Account</td><td>{!objMP.Agreement__r.From_Account__r.Name}</td>
+                </tr>
+                <tr><td class="tdBold">Exclusivity Type</td><td>{!Milestone1_Project__c.Agreement__r.Exclusivity_Type__c}</td></tr>
+                <tr><td class="tdBold">Service Types</td><td>{!Milestone1_Project__c.Agreement__r.Service_Types__c}</td></tr>
+                <tr><td class="tdBold">Contract Effective Date</td><td><apex:outputField value="{!Milestone1_Project__c.Effective_Date__c}"/></td></tr>                
+				<tr><td class="tdBold">Document Type</td><td>{!Milestone1_Project__c.Agreement__r.Agreement_Type__c}</td></tr>
+                <tr><td class="tdBold">Reimbursement Type</td><td>{!Milestone1_Project__c.Agreement__r.Reimbursement_Type__c}</td></tr>
+                <tr><td class="tdBold">Patient Letters Required</td><td>{!Milestone1_Project__c.Patient_Letters_Required_gpl__c}</td></tr>
+                <tr><td class="tdBold">PSF DCN</td><td>{!Milestone1_Project__c.PSF_DCN__c}</td></tr>
+                <tr><td class="tdBold">Regions</td><td>{!Milestone1_Project__c.Rate_Community__c}, {!Milestone1_Project__c.Additional_Communities1__c}</td></tr>
+                <tr><td class="tdBold">Term (Months)</td><td>{!Milestone1_Project__c.Agreement__r.Apttus__Term_Months__c}</td></tr>
+                <tr><td class="tdBold">Agreement DCN</td><td>{!Milestone1_Project__c.Agreement_DCN__c}</td></tr>
+				<tr><td class="tdBold">Medi-Cal Payment Directive</td><td>{!Milestone1_Project__c.Medi_Cal_Payment_Directive__c}</td></tr>
+                <tr><td class="tdBold">Tiering Type</td><td>{!Milestone1_Project__c.Agreement__r.Panel_Size_Calculation__c}</td></tr>
+                <tr><td class="tdBold">Termination Date</td><td><apex:outputField value="{!Milestone1_Project__c.Termination_Date__c}"/></td></tr>
+                <tr><td class="tdBold">Description</td><td><apex:outputText escape="false" value="{!Milestone1_Project__c.Description2__c}" ></apex:outputText></td></tr>
+           </table> 
+           <div class="page-break"/>
+
+           
+            <!-- Account/Vendor Details Sections -->
+           <apex:pageBlock >
+               <div><h2 style="color:#000000; font-family: Arial, Helvetica, sans-serif; padding-left : 10px;">Account / Vendor Details ({!objAccount['Name_on_Line_1_of_W9__c']}) - </h2></div>
+               <table>
+                   <tr><th style="text-align:center; border-bottom-style:none;" width="50%">{!accountLabelExisting}</th><th style="text-align:center; border-bottom-style:none;" width="50%">{!accountLabelUpdate}</th></tr>
+                   <apex:pageBlockTable style="margin-bottom : 15px;" value="{!accountFields}" var="field" columns="4">
+                       <apex:column headerValue="Field Name" style="font-weight:bold;" width="25%" value="{!field['label']}"/>
+                       <apex:column headerValue="Value" width="25%" value="{!objAccount[field['displayApiName']]}" />
+                       <apex:column headerValue="Field Name" style="font-weight:bold;" width="25%" value="{!field['label']}"/>
+                       <apex:column headerValue="Value" width="25%"  value="{!objUpdateAccount[field['displayApiName']]}" />
+                   </apex:pageBlockTable>
+               </table>
+               <!--W9 Table-->
+               <div class="{!IF(w9RecordWrappers.size > 0, 'page-break', '') }" />
+               <div style="{!IF(w9RecordWrappers.size > 0, 'page-break-inside:auto;', 'display: none;') }">
+                    
+                    <apex:pageBlock >
+                        <div><h4 style="font-family: Arial, Helvetica, sans-serif; padding-left : 10px;">Name on Line 2 of W-9</h4></div>
+                        <apex:pageBlockTable style="margin-bottom : 15px" value="{!w9RecordWrappers}" var="obj" columns="3">
+                            <apex:column headerValue="Name on Line 2 of W-9" value="{!obj.w9Name}" />
+                            <apex:column headerValue="Updated Name"        value="{!obj.updateName}"/>
+                            <apex:column headerValue="IDX setup action"    value="{!obj.idxAction}" />
+                        </apex:pageBlockTable>
+                    </apex:pageBlock>
+                </div>
+           </apex:pageBlock>
+
+           <!--Sites Section-->
+           <div class="{!IF(lstSiteWarppers.size > 0 || lstNewSitesJSON.size > 0, 'page-break', '') }"/>
+           <apex:pageBlock html-style="{!IF(lstSiteWarppers.size > 0 || lstNewSitesJSON.size > 0, '', 'display: none;') }">
+               <div><h2 style="color:#000000; font-family: Arial, Helvetica, sans-serif; padding-left : 10px;">Sites Infomation - </h2></div>
+                <apex:repeat value="{!lstSiteWarppers}" var="sitewrap" id="sitesRepeat">
+                   <apex:pageBlock >
+                       <div><h4 style="font-family: Arial, Helvetica, sans-serif; padding-left : 10px;">{!sitewrap.site['Name']} ({!sitewrap.site['Site_Number__c']}) : </h4></div>
+                       <table>
+                           <tr><th style="text-align:center; border-bottom-style:none;" width="50%">Existing Site Details</th><th style="text-align:center; border-bottom-style:none;" width="50%">Updates to Site Details</th></tr>
+                           <apex:pageBlockTable style="margin-bottom : 15px" value="{!siteFields}" var="field" columns="4">
+                               <apex:column headerValue="Field Name" style="font-weight:bold;"  width="25%" value="{!field['label']}"/>
+                               <apex:column headerValue="Value" width="25%"  value="{!sitewrap.site[field['displayApiName']]}" />
+                               <apex:column headerValue="Field Name" style="font-weight:bold;" width="25%" value="{!field['label']}"/>
+                               <apex:column headerValue="Value" width="25%" value="{!sitewrap.siteJSON[field['displayApiName']]}" />
+                           </apex:pageBlockTable>  
+                       </table>
+                   </apex:pageBlock>
+       <!----------------------------------------------------HOURS TABLE----------------------------------------------------------------->         
+                   <apex:form >
+                       <div>
+                           <apex:pageblock >
+                               <div><h5 style="font-family: Arial, Helvetica, sans-serif; padding-left : 10px;">Hours Table </h5></div>
+                               <table>
+                                   <tr>
+                                       <th colspan="2"></th>
+                                       <th>Sunday</th>
+                                       <th>Monday</th>
+                                       <th>Tuesday</th>
+                                       <th>Wednesday</th>
+                                       <th>Thursday</th>
+                                       <th>Friday</th>
+                                       <th>Saturday</th> 
+                                   </tr>    
+                                   <tr>
+                                       <td style="background-color:#65C4B3; font-weight:bold;" rowspan="2">Existing</td>
+                                       <td style="background-color:#65C4B3; font-weight:bold;">AM</td>
+                                       <apex:repeat value="{!lstSiteHourWrapper}" var="hour">
+                                         <td>{!sitewrap.site[hour['readableAM']]}</td>
+                                       </apex:repeat>
+                                       
+                                   </tr>
+                                   <tr>
+                                       <td style="background-color:#65C4B3; font-weight:bold;">PM</td>
+                                       <apex:repeat value="{!lstSiteHourWrapper}" var="hour">
+                                         <td>{!sitewrap.site[hour['readablePM']]}</td>
+                                       </apex:repeat>
+                                   </tr>
+                                   
+                                   <tr>
+                                       <td style="background-color:#65C4B3; font-weight:bold;" rowspan="2">Updated</td>
+                                       <td style="background-color:#65C4B3; font-weight:bold;">AM</td>
+                                       <apex:repeat value="{!lstSiteHourWrapper}" var="hour">
+                                         <td>{!sitewrap.siteJSON[hour['editableAM']]}</td>
+                                       </apex:repeat>
+                                   </tr>
+                                   <tr>
+                                       <td style="background-color:#65C4B3; font-weight:bold;">PM</td>
+                                       <apex:repeat value="{!lstSiteHourWrapper}" var="hour">
+                                         <td>{!sitewrap.siteJSON[hour['editablePM']]}</td>
+                                       </apex:repeat>
+                                   </tr>
+                               </table>
+                           </apex:pageblock>
+                       </div>
+                   </apex:form>
+               <div class="page-break"/>
+               </apex:repeat>
+
+               <!------------------------------NEW SITES CREATED ON PSF PAGE---------------------------------->
+               <apex:repeat value="{!lstNewSitesJSON}" var="newSite" id="newsitesRepeat">
+                   <apex:pageBlock >
+                       <div><h4 style="font-family: Arial, Helvetica, sans-serif; padding-left : 10px;">{!newSite['Name']} ({!newSite['Site_Number__c']}) : </h4></div>
+                       <table>
+                           <tr><th style="text-align:center; border-bottom-style:none;" width="100%">Newly Created Site Details</th></tr>  <!--<th style="text-align:center; border-bottom-style:none;" width="50%">Editable Fields</th></tr>-->
+                           <apex:pageBlockTable style="margin-bottom : 15px" value="{!siteFields}" var="field" columns="4">
+                               <apex:column headerValue="Field Name" style="font-weight:bold;"  width="25%" value="{!field['label']}"/>
+                               <apex:column headerValue="Value" width="25%"  value="{!newSite[field['displayApiName']]}" />
+                               <!--<apex:column headerValue="Field Name" style="font-weight:bold;" width="25%" value="{!field['label']}"/>
+                               <apex:column headerValue="Value" width="25%" value="{!newSite[field['displayApiName']]}" />-->
+                           </apex:pageBlockTable>  
+                       </table>
+                   </apex:pageBlock>
+       <!----------------------------------------------------HOURS TABLE----------------------------------------------------------------->         
+                   <apex:form >
+                       <div>
+                           <apex:pageblock >
+                               <div><h5 style="font-family: Arial, Helvetica, sans-serif; padding-left : 10px;">Hours Table </h5></div>
+                               <table>
+                                   <tr>
+                                       <th colspan="2"></th>
+                                       <th>Sunday</th>
+                                       <th>Monday</th>
+                                       <th>Tuesday</th>
+                                       <th>Wednesday</th>
+                                       <th>Thursday</th>
+                                       <th>Friday</th>
+                                       <th>Saturday</th>   
+                                   </tr>    
+                                   <tr>
+                                       <td style="background-color:#65C4B3; font-weight:bold;" rowspan="2">Existing</td>
+                                       <td style="background-color:#65C4B3; font-weight:bold;">AM</td>
+                                       <apex:repeat value="{!lstSiteHourWrapper}" var="hour">
+                                         <td>{!newSite[hour['readableAM']]}</td>
+                                       </apex:repeat>
+                                       
+                                   </tr>
+                                   <tr>
+                                       <td style="background-color:#65C4B3; font-weight:bold;">PM</td>
+                                       <apex:repeat value="{!lstSiteHourWrapper}" var="hour">
+                                         <td>{!newSite[hour['readablePM']]}</td>
+                                       </apex:repeat>
+                                   </tr>
+                                   
+                                   <!--<tr>
+                                       <td style="background-color:#65C4B3; font-weight:bold;" rowspan="2">Editable</td>
+                                       <td style="background-color:#65C4B3; font-weight:bold;">AM</td>
+                                       <apex:repeat value="{!lstSiteHourWrapper}" var="hour">
+                                         <td>{!newSite[hour['editableAM']]}</td>
+                                       </apex:repeat>
+                                   </tr>
+                                   <tr>
+                                       <td style="background-color:#65C4B3; font-weight:bold;">PM</td>
+                                       <apex:repeat value="{!lstSiteHourWrapper}" var="hour">
+                                         <td>{!newSite[hour['editablePM']]}</td>
+                                       </apex:repeat>
+                                   </tr>-->
+                               </table>
+                           </apex:pageblock>
+                       </div>
+                   </apex:form>
+               <div class="page-break"/>
+               </apex:repeat>
+           </apex:pageBlock>
+          
+     
+            <!-- Provider Section -->
+            <div class="{!IF(lstProviderWarppers.size > 0 || lstNewProviderJSONWrapper.size > 0, 'page-break', '') }"/>
+            <apex:pageBlock html-style="{!IF(lstProviderWarppers.size > 0 || lstNewProviderJSONWrapper.size > 0, '', 'display: none;') }">
+                <apex:variable var="cnt" value="{!0}" />
+                <div ><h2 style="color:#000000; font-family: Arial, Helvetica, sans-serif; padding-left:10px;">Providers Information - </h2></div>
+                <apex:repeat value="{!lstProviderWarppers}" var="prowrap" id="providersRepeat">
+                    <div style="{!if(cnt < 1, 'page-break-before:avoid;','page-break-before:always;')}">
+                        <apex:variable var="cnt" value="{!cnt+1}"/>
+                        <apex:pageBlock >
+                            <div><h4 style="font-family: Arial, Helvetica, sans-serif; padding-left : 10px;">{!prowrap.Name} : </h4></div>
+                            <table>
+                                <tr><th style="text-align:center; border-bottom-style:none;" width="50%">Existing Provider Details</th><th style="text-align:center; border-bottom-style:none;" width="50%">Updates to Provider Details</th></tr>
+                                <apex:pageBlockTable style="margin-bottom : 15px" value="{!providerFields}" var="field" columns="4">
+                                <apex:column headerValue="Field Name" style="font-weight:bold;" width="25%" value="{!field['label']}"/>
+                                <apex:column headerValue="Value" width="25%"  value="{!prowrap.provider[field['displayApiName']]}" />
+                                <apex:column headerValue="Field Name" style="font-weight:bold;" width="25%" value="{!field['label']}"/>
+                                <apex:column headerValue="Value" width="25%"  value="{!prowrap.providerJSON[field['displayApiName']]}" />
+                                </apex:pageBlockTable> 
+                            </table>
+                        </apex:pageBlock>
+                        <!-- <br/><br/>-->
+                        
+                        <!---------------------------------- IPA TABLE STARTS -------------------------------------------------------------------------------------------------->
+                        <apex:form rendered="{!AND(isIPAAvailable, NOT(hideTablesForTermChange) )}">
+                            <div style="page-break-inside:avoid;"><!--<h4 style="font-family: Arial, Helvetica, sans-serif; padding-left : 10px;"> {!prowrap.Name}</h4>-->             
+                                <!--Table2-->
+                                <div style="page-break-inside:auto;">
+                                    <apex:pageBlock rendered="{!AND(isIPAAvailable, NOT(hideTablesForTermChange), prowrap.containsIPA )}">
+                                        <div><h4 style="font-family: Arial, Helvetica, sans-serif; padding-left : 10px;">{!prowrap.Name} - IPA Capitation Table : </h4></div>
+                                        
+                                        <table class="irTable" style="-fs-table-paginate: paginate;">
+                                            <!-- Main Column creation -->
+                                            <tr>
+                                                <th class="irTableth" rowspan="2" title="IPA ASSIGNMENT">IPA ASSIGNMENT</th>
+                                                <apex:repeat value="{!lstIPAWrapper}" var="item" >
+                                                    <!-- {!mapProductTolstMemberships[item].length} -->
+                                                    <th class="irTableth" colspan="{!item.colspan}" scope="colgroup">{!item.mainColumn}</th>
+                                                </apex:repeat>
+                                                <!-- <th rowspan="2">Delete</th>-->
+                                            </tr>
+                                            <!-- subcolumn creation -->
+                                            <tr>
+                                                <apex:repeat value="{!lstIPAWrapper}" var="item" >
+                                                    <apex:repeat value="{!item.lstSubColumns}" var="subCol" >
+                                                        <th class="irTableth" scope="col">{!subCol}</th>
+                                                    </apex:repeat>
+                                                </apex:repeat>
+                                            </tr>
+                                            <!-- data row creation -->
+                                            <apex:variable var="deleteIPAs" value="{!''}{!prowrap.deletedIPAs}" />
+                                            <apex:repeat value="{!lstIPARowsMap}" var="item" >
+                                                <tr style="display:{!IF(CONTAINS(deleteIPAs, item[0]['key']), 'none','')}" class="tr_pagebreak">
+                                                    <td scope="row" class="irTableth" title="{!item[0]['key']}"><b>{!item[0]['key']}</b></td>
+                                                    <apex:repeat value="{!item}" var="val" first="1" >
+                                                        <td class="irTabletd" role="gridcell">
+                                                            <apex:outputPanel rendered="{!IF( val['key'] == 'Members with Medicare Eligibility Only', true, false )}">
+                                                                <!-- show updated value medicare-->
+                                                                ${!IF(ISBLANK(prowrap.medicareValue) || prowrap.medicareValue == '', val['value'], prowrap.medicareValue )}
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel rendered="{!IF(CONTAINS(val['key'], 'Members with Medicare and Medi-Cal Eligibility'), true, false)}">
+                                                                <!-- show updated value dualcare-->
+                                                                ${!IF(ISBLANK(prowrap.dualValue) || prowrap.dualValue == '', val['value'], prowrap.dualValue )}
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel rendered="{!IF(AND(val['key'] != 'Members with Medicare Eligibility Only', NOT(CONTAINS(val['key'], 'Members with Medicare and Medi-Cal Eligibility'))), true, false)}">
+                                                                <!-- show regular value -->
+                                                                ${!val['value']}
+                                                            </apex:outputPanel>
+                                                        </td>
+                                                    </apex:repeat>
+                                                </tr>
+                                            </apex:repeat>
+                                        </table>
+                                    </apex:pageBlock>
+                                </div><br/>
+                                <!---------------------------------- IPA TABLE ENDS--------------------------------------------------------------------------------------------------->
+                                <!---------------------------------- TIERING TABLE STARTS ------------------------------------------------------------------------------------------> 
+                                <div style="page-break-inside:avoid;">
+                                    <apex:pageBlock rendered="{!AND(prowrap.containsTiering)}">  
+
+                                    <apex:pageBlock rendered="{!AND(showTieringTable == 'NPI Level', lstTieringWrappers != null, lstTieringWrappers.size > 0, NOT(hideTablesForTermChange))}">
+    <div><h4 style="font-family: Arial, Helvetica, sans-serif; padding-left : 10px;">{!prowrap.Name} - Tiering Table </h4></div>
+                                            <table>
+                                                <thead>
+                                                    <tr>
+                                                        <!--th  class="TieTableth" scope="col">Membership Tiering</th-->
+                                                        <th class="TieTableth" colspan="1" scope="colgroup">Membership Panel Size </th>
+                                                        <th class="TieTableth" colspan="1" scope="colgroup"> Medicare Tier </th>
+                                                        <th  class="TieTableth" colspan="1" scope="colgroup">Medicare PMPM</th>
+                                                        <th class="TieTableth" colspan="1" scope="colgroup">Dually Enrolled Tier</th>
+                                                        <th  class="TieTableth" colspan="1" scope="colgroup">Dually Enrolled PMPM</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!--tr><th rowspan="8" scope="rowgroup"></th></tr-->
+                                                    <apex:repeat value="{!prowrap.tieringTable}" var="tier">
+                                                        <tr>
+                                                            <td class="TieTableth">{!tier.panelSize}</td>
+                                                            <td class="TieTableth">
+                                                                <apex:outputPanel rendered="{!tier.medicareCheck}">
+                                                                    <input type="radio" checked="true" name="{!prowrap.Name}+medi" data-id="{!tier.Id}+medi"  />
+                                                                </apex:outputPanel>
+                                                                <apex:outputPanel rendered="{!!tier.medicareCheck}">
+                                                                    <input type="radio" unchecked="true" name="{!prowrap.Name}+medi" data-id="{!tier.Id}+medi" />
+                                                                </apex:outputPanel>
+                                                            </td>
+                                                            <td class="TieTabletd">
+                                                                <apex:outputText value="${0, number,##.00}">
+                                                                <apex:param value="{!tier.medicareValue}" />
+                                                                </apex:outputText></td>
+                                                            <td class="TieTableth">
+                                                                <apex:outputPanel rendered="{!tier.dualCheck}">
+                                                                    <input type="radio" checked="true" name="{!prowrap.Name}+dual" data-id="{!tier.Id}+dual"/>
+                                                                </apex:outputPanel>
+                                                                <apex:outputPanel rendered="{!!tier.dualCheck}">
+                                                                    <input type="radio" unchecked="true" name="{!prowrap.Name}+dual" data-id="{!tier.Id}+dual"/>
+                                                                </apex:outputPanel>
+                                                            </td>
+                                                            <td class="TieTabletd"><apex:outputText value="${0, number,##.00}">
+                                                                <apex:param value="{!tier.dualValue}" />
+                                                                </apex:outputText></td>
+                                                        </tr>
+                                                    </apex:repeat>
+                                                </tbody>
+                                            </table>
+                                       
+                                    </apex:pageBlock>
+                                      </apex:pageBlock>
+                                </div>
+                            </div> 
+                            <!---------------------------------- TIERING TABLE ENDS -------------------------------------------------------------------------------------------->             
+                        </apex:form> 
+                    </div>
+                </apex:repeat>
+
+                <!-----------------------------------NEWLY CREATED PROVIDER RECORDS--------------------------------------------------------->
+                <apex:repeat value="{!lstNewProviderJSONWrapper}" var="prowrap" id="NewProvidersRepeat">
+                    <div style="{!if(cnt < 1, 'page-break-before:avoid;','page-break-before:always;')}">
+                        <apex:variable var="cnt" value="{!cnt+1}"/>
+                        <apex:pageBlock >
+                            <div><h4 style="font-family: Arial, Helvetica, sans-serif; padding-left : 10px;">{!prowrap.Name} : </h4></div>
+                            <table>
+                                <tr><th style="text-align:center; border-bottom-style:none;" width="100%">Newly Added Provider Details</th></tr><!--<th style="text-align:center; border-bottom-style:none;" width="50%">Updates to Provider Details</th></tr>-->
+                                <apex:pageBlockTable style="margin-bottom : 15px" value="{!providerFields}" var="field" columns="4">
+                                    <apex:column headerValue="Field Name" style="font-weight:bold;" width="25%" value="{!field['label']}"/>
+                                    <apex:column headerValue="Value" width="25%"  value="{!prowrap.provider[field['displayApiName']]}" />
+                                </apex:pageBlockTable> 
+                            </table>
+                        </apex:pageBlock>
+                        <!-- <br/><br/>-->
+
+                        <!---------------------------------- IPA TABLE STARTS -------------------------------------------------------------------------------------------------->
+                        <apex:form rendered="{!AND(isIPAAvailable, NOT(hideTablesForTermChange) )}">
+                            <div style="page-break-inside:avoid;"><!--<h4 style="font-family: Arial, Helvetica, sans-serif; padding-left : 10px;"> {!prowrap.Name}</h4>-->             
+                                <!--Table2-->
+                                <div style="page-break-inside:auto;">
+                                    <apex:pageBlock rendered="{!AND(isIPAAvailable, NOT(hideTablesForTermChange) )}">
+                                        <div><h4 style="font-family: Arial, Helvetica, sans-serif; padding-left : 10px;">{!prowrap.Name} - IPA Capitation Table : </h4></div>
+                            
+                                        <table class="irTable" style="-fs-table-paginate: paginate;">
+                                            <!-- Main Column creation -->
+                                            <tr>
+                                                <th class="irTableth" rowspan="2" title="IPA ASSIGNMENT">IPA ASSIGNMENT</th>
+                                                <apex:repeat value="{!lstIPAWrapper}" var="item" >
+                                                    <!-- {!mapProductTolstMemberships[item].length} -->
+                                                    <th class="irTableth" colspan="{!item.colspan}" scope="colgroup">{!item.mainColumn}</th>
+                                                </apex:repeat>
+                                                <!-- <th rowspan="2">Delete</th>-->
+                                            </tr>
+                                            <!-- subcolumn creation -->
+                                            <tr>
+                                                <apex:repeat value="{!lstIPAWrapper}" var="item" >
+                                                    <apex:repeat value="{!item.lstSubColumns}" var="subCol" >
+                                                        <th class="irTableth" scope="col">{!subCol}</th>
+                                                    </apex:repeat>
+                                                </apex:repeat>
+                                            </tr>
+                                            <!-- data row creation -->
+                                            <apex:variable var="deleteIPAs" value="{!''}{!prowrap.deletedIPAs}" />
+                                            <apex:repeat value="{!lstIPARowsMap}" var="item" >
+                                                <tr style="display:{!IF(CONTAINS(deleteIPAs, item[0]['key']), 'none','')}">
+                                                    <td scope="row" class="irTableth" title="{!item[0]['key']}"><b>{!item[0]['key']}</b></td>
+                                                    <apex:repeat value="{!item}" var="val" first="1" >
+                                                        <td class="irTabletd" role="gridcell">
+                                                            <apex:outputPanel rendered="{!IF( val['key'] == 'Members with Medicare Eligibility Only', true, false )}">
+                                                                <!-- show updated value medicare-->
+                                                                ${!IF(ISBLANK(prowrap.medicareValue) || prowrap.medicareValue == '', val['value'], prowrap.medicareValue )}
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel rendered="{!IF(CONTAINS(val['key'], 'Members with Medicare and Medi-Cal Eligibility'), true, false)}">
+                                                                <!-- show updated value dualcare-->
+                                                                ${!IF(ISBLANK(prowrap.dualValue) || prowrap.dualValue == '', val['value'], prowrap.dualValue )}
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel rendered="{!IF(AND(val['key'] != 'Members with Medicare Eligibility Only', NOT(CONTAINS(val['key'], 'Members with Medicare and Medi-Cal Eligibility'))), true, false)}">
+                                                                <!-- show regular value -->
+                                                                ${!val['value']}
+                                                            </apex:outputPanel>
+                                                        </td>
+                                                    </apex:repeat>
+                                                </tr>
+                                            </apex:repeat>
+                                        </table>
+                                    </apex:pageBlock>
+                                </div><br/>
+                                <!---------------------------------- IPA TABLE ENDS--------------------------------------------------------------------------------------------------->
+                                <!---------------------------------- TIERING TABLE STARTS ------------------------------------------------------------------------------------------> 
+                                <div style="page-break-inside:avoid;">
+                                   <!-- <apex:pageBlock rendered="{!AND(hideTieringTablesForToggle , prowrap.tieringTable != null)}">  -->
+                                    <apex:pageBlock rendered="{!AND(showTieringTable == 'NPI Level', lstTieringWrappers != null, lstTieringWrappers.size > 0, NOT(hideTablesForTermChange) )}">
+
+                                        <div><h4 style="font-family: Arial, Helvetica, sans-serif; padding-left : 10px;">{!prowrap.Name} - Tiering Table </h4></div>
+                                            <table>
+                                                <thead>
+                                                    <tr>
+                                                        <!--th  class="TieTableth" scope="col">Membership Tiering</th-->
+                                                        <th class="TieTableth" colspan="1" scope="colgroup">Membership Panel Size</th>
+                                                        <th class="TieTableth" colspan="1" scope="colgroup">Medicare Tier</th>
+                                                        <th  class="TieTableth" colspan="1" scope="colgroup">Medicare PMPM</th>
+                                                        <th class="TieTableth" colspan="1" scope="colgroup">Dually Enrolled Tier </th>
+                                                        <th  class="TieTableth" colspan="1" scope="colgroup">Dually Enrolled PMPM</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!--tr><th rowspan="8" scope="rowgroup"></th></tr-->
+                                                    <apex:repeat value="{!prowrap.tieringTable}" var="tier">
+                                                        <tr>
+                                                            <td class="TieTableth">{!tier.panelSize}</td>
+                                                            <td class="TieTableth">
+                                                                <apex:outputPanel rendered="{!tier.medicareCheck}">
+                                                                    <input type="radio" checked="true" name="{!prowrap.Name}+medi" data-id="{!tier.Id}+medi"  />
+                                                                </apex:outputPanel>
+                                                                <apex:outputPanel rendered="{!!tier.medicareCheck}">
+                                                                    <input type="radio" unchecked="true" name="{!prowrap.Name}+medi" data-id="{!tier.Id}+medi" />
+                                                                </apex:outputPanel>
+                                                            </td>
+                                                            <td class="TieTabletd"><apex:outputText value="${0, number,##.00}">
+                                                                <apex:param value="{!tier.medicareValue}" />
+                                                                </apex:outputText></td>
+                                                            <td class="TieTableth">
+                                                                <apex:outputPanel rendered="{!tier.dualCheck}">
+                                                                    <input type="radio" checked="true" name="{!prowrap.Name}+dual" data-id="{!tier.Id}+dual"/>
+                                                                </apex:outputPanel>
+                                                                <apex:outputPanel rendered="{!!tier.dualCheck}">
+                                                                    <input type="radio" unchecked="true" name="{!prowrap.Name}+dual" data-id="{!tier.Id}+dual"/>
+                                                                </apex:outputPanel>
+                                                            </td>
+                                                            <td class="TieTabletd"><apex:outputText value="${0, number,##.00}">
+                                                                <apex:param value="{!tier.dualValue}" />
+                                                                </apex:outputText></td>
+                                                        </tr>
+                                                    </apex:repeat>
+                                                </tbody>
+                                            </table>
+                                        
+                                    </apex:pageBlock>
+                                       <!-- </apex:pageBlock>-->
+                                </div>
+                            </div> 
+                            <!---------------------------------- TIERING TABLE ENDS -------------------------------------------------------------------------------------------->             
+                        </apex:form> 
+                    </div>
+                </apex:repeat>
+           </apex:pageBlock>
+           
+           <!-- RELATIONSHIPS TABLE START -->
+           <div style="{!IF(junctionWrapList.size > 0 , '', 'display: none;') }">
+               <div><h2 style="font-family: Arial, Helvetica, sans-serif; padding-left : 10px;">Relationships Table</h2></div>
+               <table>
+                   <tr>
+                       <th>Provider</th>
+                       <th>Site</th>
+                       <th>Street</th>
+                       <th>Effective Date</th>
+                       <th>Term Date</th>
+                       <th>IDX Action</th>
+                   </tr>    
+                   
+                   <apex:repeat value="{!junctionWrapList}" var="jun">
+                       <tr >
+                           <td>{!jun.providerName}</td>
+                           <td>{!jun.siteName}</td>
+                           <td>{!jun.siteStreet}</td>
+                           <td>{!jun.pdfEffectiveDate}</td>
+                           <td>{!jun.pdfTermDate}</td>
+                           <td class="{! if(jun.idxAction == 'Term', 'orange',if(jun.idxAction == 'Add', 'green', ''))}">{!jun.idxAction}</td>
+                       </tr>
+                   </apex:repeat>
+               </table> 
+           </div>
+           
+        </body>
+    </html>
+</apex:page>

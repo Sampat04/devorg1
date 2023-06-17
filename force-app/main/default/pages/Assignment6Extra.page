@@ -1,0 +1,28 @@
+<apex:page controller="A6extra">
+
+    <apex:form >  
+        <apex:pageBlock >
+        
+            <apex:pageBlockButtons >
+                <apex:commandButton value="GO" action="{!save1}" />
+                <apex:commandButton value="SAVE" action="{!save}" /> 
+            </apex:pageBlockButtons>
+    
+           <apex:selectList value="{!country1}" size="1">
+               <apex:selectOptions value="{!items}"/>               
+           </apex:selectList>
+           <br/>
+           
+           <apex:pageBlockTable value="{!options2}" var="x">
+               <apex:column value="{!x.name}" headerValue="Type"/>
+               
+               <apex:column >
+               <apex:inputField value="{!x.Skill_1_Proficiency__c}" />
+               </apex:column>
+
+           </apex:pageBlockTable>
+            
+       </apex:pageBlock>
+    </apex:form>
+
+</apex:page>

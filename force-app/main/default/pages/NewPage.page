@@ -1,0 +1,41 @@
+<apex:page standardController="Account" >
+<apex:form >
+    <apex:pageMessages />
+  <!-- Begin Default Content REMOVE THIS -->
+  <h1>Congratulations</h1>
+  This is your new Page <br/>
+  
+  This page is shown in context of {!$user.FirstName }
+    <br/>
+    adam ben
+    
+   <apex:pageBlock >
+ 
+       <apex:pageBlockSection collapsible="true" title="Account details">       
+       
+           <apex:pageBlockSection >
+           
+               <apex:outputField value="{!account.name }"/>
+               <apex:inputField value="{!account.name }"/>
+       
+           </apex:pageBlockSection>
+                          
+           <apex:pageBlockSection >
+           
+                  {!account.name }
+
+           </apex:pageBlockSection>
+       
+       </apex:pageBlockSection>
+       
+     
+       <apex:pageBlockButtons >
+            <apex:commandButton value="SaveMyData" action="{!Save}"/>
+
+       </apex:pageBlockButtons>
+       
+   </apex:pageBlock>   
+  {!account.name } 
+  </apex:form>
+  <!-- End Default Content REMOVE THIS -->
+</apex:page>

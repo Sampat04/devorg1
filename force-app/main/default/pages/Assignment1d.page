@@ -1,0 +1,8 @@
+<apex:page standardController="account">
+  <apex:dataTable value="{!account.contacts}" var="v" cellpadding="4" border="1">
+    
+        <apex:facet name="header">Name</apex:facet>
+        <apex:column value="{!v.name}" />         
+        
+  </apex:dataTable>
+</apex:page>

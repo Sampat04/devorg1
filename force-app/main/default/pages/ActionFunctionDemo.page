@@ -1,0 +1,22 @@
+<apex:page standardcontroller="Account" extensions="MyController2" tabStyle="Account">
+    <apex:form >
+       <apex:actionFunction name="actionFunName" action="{!ActionFunMethod}" reRender="outputtxtId"/>
+       <apex:pageBlock > 
+            <apex:outputLabel for="inptCheckBox" value="Check this box to call Controller method from js using ActionFunction" 
+            style="color:green;">
+            </apex:outputLabel> 
+            <apex:inputcheckbox onclick="MyJavaScript()" id="inptCheckBox"/>
+            
+       </apex:pageBlock> 
+      
+      <apex:outputText value="{!MyString_From_Method}" id="outputtxtId"></apex:outputText> 
+    </apex:form> 
+    
+    <script>
+      function MyJavaScript(){
+       //all your java script validations ....
+       actionFunName(); 
+      }
+    </script>
+     
+</apex:page>

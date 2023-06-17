@@ -1,0 +1,28 @@
+<template>
+
+<lightning-card>
+    ACCOUNT COMPONENT TO SHOW CONTACTS : {recordId}
+    <br/>
+    <lightning-button label="CALL" onclick={eventDisplay}></lightning-button>
+    <br/>
+    <template if:true={buttonCall}>
+        BUTTON 1
+    </template>
+    <template if:false={buttonCall}>
+        BUTTON 2
+    </template>
+
+    <lightning-input class="input1" type="string" onkeyup={inputEvt}></lightning-input>
+    <lightning-input type="date"></lightning-input>
+
+    Input is : {inputBoxString}
+    <br/>
+    
+    <template for:each={contactList} for:item="con">
+        {con.Name} |
+    </template>
+
+</lightning-card>
+
+
+</template>

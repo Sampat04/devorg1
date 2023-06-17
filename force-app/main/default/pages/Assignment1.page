@@ -1,0 +1,14 @@
+<apex:page standardController="contact">
+  <apex:image url="https://developer.salesforce.com/files/salesforce-developer-network-logo.png"/ >
+  <br/>
+  <br/>
+
+  {!$User.FirstName}
+  
+  <br/><br/>
+  
+ {!contact.firstname}    <br/>
+ {!contact.lastname}    <br/>
+ {!contact.email}
+ 
+ </apex:page>

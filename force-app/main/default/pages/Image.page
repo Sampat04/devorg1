@@ -1,0 +1,7 @@
+<apex:page >
+
+abc
+  
+  <apex:image url="{!URLFOR($Resource.arsenal,'thZ9VZXOY6.jpg')}"/>
+  
+ </apex:page>

@@ -1,0 +1,15 @@
+<apex:page controller="simplegetset">
+  <apex:form >
+    
+     
+       <apex:inputtext value="{!userinput}">
+           <apex:actionsupport event="onclick" rerender="display" />
+       </apex:inputtext>             
+             
+    <apex:outputpanel id="display">
+        <apex:outputtext value="The name entered is {!userinput}"/>
+    </apex:outputpanel>     
+    
+    
+  </apex:form>    
+</apex:page>

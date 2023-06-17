@@ -1,0 +1,505 @@
+<apex:page renderAs="advanced_pdf" showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false"
+    standardController="Milestone1_Project__c" extensions="Rdpsf_Controller3">
+    <!-- renderAs="advanced_pdf" -->
+    <html>
+
+    <head>
+        <style type="text/css">
+            @page {
+                /*size: A4 landscape;*/
+                margin: 7mm;
+                border: 0.7px solid black;
+                padding-around: 5px;
+                padding-top: 5px;
+            }
+
+            @page {
+                @top-center {
+                    content: "{!project.Name}";
+                    font-size: 12px;
+                    color: #595959;
+                    font-family: Arial, Helvetica, sans-serif;
+                }
+
+                @top-left {
+                    content: element(pageHeader);
+                }
+
+                @bottom-left {
+                    content: "Page " counter(page) " of " counter(pages);
+                    font-size: 10px;
+                    color: #595959;
+                    font-family: Arial, Helvetica, sans-serif;
+                }
+            }
+
+            @page: last {
+                display: none
+            }
+
+            table {
+                border: 0.5px solid black;
+                border-collapse: collapse !important;
+                width: 100%;
+                -fs-table-paginate: paginate;
+                border-spacing: 0;
+            }
+
+            th {
+                border: 0.5px solid black;
+                border-collapse: collapse !important;
+                font-weight: bold;
+                text-align: left;
+                color: black;
+                padding: 5px;
+                background-color: #65C4B3;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 10px;
+            }
+
+            /* <!--#66b3ff--> */
+
+            td {
+                border: 0.5px solid black;
+                border-collapse: collapse !important;
+                padding: 5px;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 10px;
+            }
+
+            tr,
+            .tr_pagebreak {
+                page-break-inside: avoid;
+                page-break-after: auto;
+            }
+
+            .page-break {
+                display: block;
+                page-break-after: always;
+            }
+
+            .tdBold {
+                font-weight: bold;
+                text-align: left;
+                vertical-align: baseline;
+            }
+
+            .irTable {
+                width: 100%;
+                border-collapse: collapse !important;
+            }
+
+            .irTableth {
+                border-collapse: collapse !important;
+                padding-around: 2px;
+                height: auto;
+                /* min-width: 65px; */
+                width: 65px;
+                text-align: center;
+            }
+
+            .irTabletd {
+                border-collapse: collapse !important;
+                padding-around: 2px;
+                width: 12px;
+                height: 12px;
+                text-align: right;
+            }
+
+            .TieTableth {
+                text-align: center;
+            }
+
+            .TieTabletd {
+                text-align: right;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            h4 {
+                font-size: 14px;
+            }
+
+            h5 {
+                font-size: 12px;
+            }
+
+            #pageHeader {
+                position: running(pageHeader);
+                padding-top: 3px;
+                padding-bottom: 3px;
+                padding-left: 10px;
+
+            }
+
+            .orange {
+                background: orange;
+            }
+
+            .green {
+                background: green;
+            }
+            
+            .Green {
+            background: #85ff7a;
+            }
+            
+            .Grey {
+            background: #bcbcbc;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="pageHeader">
+            <img src="{!URLFOR($Resource.optum_logo_watermark)}" width="75px" height="20px" />
+        </div>
+
+        <div>
+            <h2 style="color:#000000; font-family: Arial, Helvetica, sans-serif; padding-left : 10px;">Project / PSF Details -</h2>
+        </div>
+        
+        <apex:pageBlock >
+            <apex:pageBlockTable style="margin-bottom : 15px;" value="{!projectFieldsForUI}" var="projFld" columns="2">
+                <apex:column headerValue="Field Name" style="font-weight:bold;" width="30%" value="{!projectFieldNameMap[projFld.apiName]}" />
+                <apex:column headerValue="Value" width="70%" value="{!projectInfoMap[projFld.apiName]}"/>
+            </apex:pageBlockTable>
+            <table><td width="30%" class="tdBold">Description</td><td><apex:outputText escape="false" value="{!Milestone1_Project__c.Description2__c}"></apex:outputText></td></table>
+        </apex:pageBlock>
+        <div class="page-break" />
+
+        <!-- Account/Vendor Details Sections -------->
+        <apex:pageBlock >
+            <div>
+                <h2 style="color:#000000; font-family: Arial, Helvetica, sans-serif; padding-left : 10px;">Account / Vendor Details ({!nameOnLine1}) - </h2>
+            </div>
+            <table>
+                <tr>
+                    <th style="text-align:center; border-bottom-style:none;" width="50%">{!accountLabelExisting}</th>
+                    <th style="text-align:center; border-bottom-style:none;" width="50%">{!accountLabelUpdate}</th>
+                </tr>
+                
+                <apex:pageBlockTable style="margin-bottom : 15px;" value="{!accountWrapper}" var="account" columns="4">
+                    <apex:column headerValue="Field Name" style="font-weight:bold;" width="25%" value="{!account.apiKey}" />
+                    <apex:column headerValue="Value" width="25%" value="{!account.value1}" />
+                    <apex:column headerValue="Field Name" style="font-weight:bold;" width="25%" value="{!account.apiKey}" />
+                    <apex:column headerValue="Value" width="25%" value="{!account.value2}" />
+                </apex:pageBlockTable>
+            </table>
+            <!--W9 Table-->
+            <div class="{!IF(w9RecordWrappers.size > 0, 'page-break', '') }" />
+            <div style="{!IF(w9RecordWrappers.size > 0, 'page-break-inside:auto;', 'display: none;') }">
+
+                <apex:pageBlock >
+                    <div>
+                        <h4 style="font-family: Arial, Helvetica, sans-serif; padding-left : 10px;">Name on Line 2 of W-9</h4>
+                    </div>
+                    <apex:pageBlockTable style="margin-bottom : 15px" value="{!w9RecordWrappers}" var="obj" columns="3">
+                        <apex:column headerValue="Name on Line 2 of W-9" value="{!obj.w9Name}" />
+                        <apex:column headerValue="Updated Name" value="{!obj.updateName}" />
+                        <apex:column headerValue="IDX setup action" value="{!obj.idxAction}" />
+                    </apex:pageBlockTable>
+                </apex:pageBlock>
+            </div>
+        </apex:pageBlock>
+
+        <!--------Sites Section------------------>
+        <div class="{!IF(siteWrapper.size >0 , 'page-break', '') }" />
+        <apex:pageBlock html-style="{!IF(siteWrapper.size >0, '', 'display: none;') }">
+            <div>
+                <h2 style="color:#000000; font-family: Arial, Helvetica, sans-serif; padding-left : 10px;">Sites Infomation - </h2>
+            </div>
+            <apex:repeat value="{!siteWrapper}" var="sitewrap" id="sitesRepeat">
+                <apex:pageBlock >
+                    <div>
+                        <h4 style="font-family: Arial, Helvetica, sans-serif; padding-left : 10px;">{!sitewrap.title} : </h4>
+                    </div>
+                    <div>
+                        <h5 style="font-family: Arial, Helvetica, sans-serif; padding-left : 10px;">IDX Setup Action - {!sitewrap.title1}  </h5>
+                    </div>
+                    <table>
+                        <tr>
+                            <th style="text-align:center; border-bottom-style:none;" width="50%">Existing Site Details</th>
+                            <th style="text-align:center; border-bottom-style:none;" width="50%">Updates to Site Details</th>
+                        </tr>
+                        <apex:pageBlockTable style="margin-bottom : 15px" value="{!sitewrap.data}" var="field" columns="4">
+                            <apex:column headerValue="Field Name" style="font-weight:bold;" width="25%" value="{!field.apiKey}" />
+                            <apex:column headerValue="Value" width="25%" value="{!field.value1}" />
+                            <apex:column headerValue="Field Name" style="font-weight:bold;" width="25%" value="{!field.apiKey}" />
+                            <apex:column headerValue="Value" width="25%" value="{!field.value2}" />
+                        </apex:pageBlockTable>
+                    </table>
+                </apex:pageBlock>
+                <!----------------------------------------------------HOURS TABLE----------------------------------------------------------------->         
+                   <apex:form >
+                       <div>
+                           <apex:pageblock >
+                               <div><h5 style="font-family: Arial, Helvetica, sans-serif; padding-left : 10px;">Hours Table </h5></div>
+                               <table>
+                                   <tr>
+                                       <th colspan="2"></th>
+                                       <th>Sunday</th>
+                                       <th>Monday</th>
+                                       <th>Tuesday</th>
+                                       <th>Wednesday</th>
+                                       <th>Thursday</th>
+                                       <th>Friday</th>
+                                       <th>Saturday</th> 
+                                   </tr>    
+                                   <tr>
+                                       <td style="background-color:#65C4B3; font-weight:bold;" rowspan="2">Existing</td>
+                                       <td style="background-color:#65C4B3; font-weight:bold;">AM</td>
+                                       <apex:repeat value="{!sitewrap.readableAM}" var="hour">
+                                         <td>{!hour}</td>
+                                       </apex:repeat>
+                                       
+                                   </tr>
+                                   <tr>
+                                       <td style="background-color:#65C4B3; font-weight:bold;">PM</td>
+                                       <apex:repeat value="{!sitewrap.readablePM}" var="hour">
+                                        <td>{!hour}</td>
+                                       </apex:repeat>
+                                   </tr>
+                                   
+                                   <tr>
+                                       <td style="background-color:#65C4B3; font-weight:bold;" rowspan="2">Updated</td>
+                                       <td style="background-color:#65C4B3; font-weight:bold;">AM</td>
+                                       <apex:repeat value="{!sitewrap.editableAM}" var="hour">
+                                        <td>{!hour}</td>
+                                       </apex:repeat>
+                                   </tr>
+                                   <tr>
+                                       <td style="background-color:#65C4B3; font-weight:bold;">PM</td>
+                                       <apex:repeat value="{!sitewrap.editablePM}" var="hour">
+                                        <td>{!hour}</td>
+                                       </apex:repeat>
+                                   </tr>
+                               </table>
+                           </apex:pageblock>
+                       </div>
+                   </apex:form>
+                <div class="page-break" />
+            </apex:repeat>
+        </apex:pageBlock> 
+        <!----- sites section ends here---->
+
+        <!------ Provider Section ------->
+        <div class="{!IF(providerWrapper.size >0 , 'page-break', '') }" />
+        <apex:pageBlock html-style="{!IF(providerWrapper.size >0, '', 'display: none;') }">
+            <apex:variable var="cnt" value="{!0}" />
+            <div>
+                <h2 style="color:#000000; font-family: Arial, Helvetica, sans-serif; padding-left:10px;">Providers Information - </h2>
+            </div>
+            <apex:repeat value="{!providerWrapper}" var="prowrap" id="providersRepeat">
+                <div style="{!if(cnt < 1, 'page-break-before:avoid;','page-break-before:always;')}">
+                    <apex:variable var="cnt" value="{!cnt+1}" />
+                    <apex:pageBlock >
+                        <div>
+                            <h4 style="font-family: Arial, Helvetica, sans-serif; padding-left : 10px;">{!prowrap.title} : </h4>
+                        </div>
+                        <div>
+                            <h5 style="font-family: Arial, Helvetica, sans-serif; padding-left : 10px;">IDX Setup Action - {!prowrap.title1} </h5>
+                        </div>
+                        <table>
+                            <tr>
+                                <th style="text-align:center; border-bottom-style:none;" width="50%">Existing Provider Details</th>
+                                <th style="text-align:center; border-bottom-style:none;" width="50%">Updates to Provider Details</th>
+                            </tr>
+                            <apex:pageBlockTable style="margin-bottom : 15px" value="{!prowrap.data}" var="field" columns="4">
+                                <apex:column headerValue="Field Name" style="font-weight:bold;" width="25%" value="{!field.apiKey}" />
+                                <apex:column headerValue="Value" width="25%" value="{!field.value1}" />
+                                <apex:column headerValue="Field Name" style="font-weight:bold;" width="25%" value="{!field.apiKey}" />
+                                <apex:column headerValue="Value" width="25%" value="{!field.value2}" />
+                            </apex:pageBlockTable>
+                        </table>
+                    </apex:pageBlock>
+                    <!-- <br/><br/>-->
+                </div>
+                <!---------------------------------- TABLES STARTS ----------------------------------->
+                <apex:form style="{!IF(prowrap.tieringCapitationRec.size > 0, 'page-break-before:avoid;', 'display: none;') }">
+                   
+                        <apex:pageBlock >
+                            <apex:variable var="cnt1" value="{!0}" />                           
+                            <apex:repeat value="{!prowrap.tieringCapitationRec}" var="item">
+                                <div style="{!if(cnt1 < 1, 'page-break-before:avoid;','page-break-before:auto;')}">
+                                    <apex:variable var="cnt1" value="{!cnt1+1}" />
+                                    <div style="{!IF(item.capitationWrapper.capitationColumn.lstSubColumns != NULL, 'page-break-inside:avoid;', 'display: none;') }">
+                                        <div>
+                                            
+                                            <h4 style="font-family: Arial, Helvetica, sans-serif; padding-left : 10px;">{!item.regionName}- Capitation Table- {!prowrap.title} </h4>
+                                        </div>
+                                        <div  style="{!IF(item.capitationWrapper.capitationColumn.lstSubColumns != NULL && item.capitationWrapper.capitationColumn.lstSubColumns.size > 20, 'page-break-before:always;', 'page-break-inside:avoid;') }">
+                                            <table class="irTable" style="-fs-table-paginate: paginate;width: 100%">
+                                                    <!-- Main Column creation -->
+                                                    <tr>
+                                                        <th class="irTableth" title="Product">Product</th>
+                                                        <th class="irTableth" title="Membership">Membership</th>
+                                                        <apex:repeat value="{!item.capitationWrapper.capitationColumn.lstSubColumns}" var="item1">
+                                                            <th class="irTableth" scope="col">{!item1}</th>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                    <apex:repeat value="{!item.capitationWrapper.capitationData}" var="item2">
+                                                        <tr>
+                                                            <td rowspan="{!item2.rowspan}" style="{!IF(!item2.mainSidebarExist, 'display:none;', '') }">{!item2.mainSidebar}</td>
+                                                            <td>{!item2.subSidebar}</td>
+                                                            <apex:repeat value="{!item2.lstValues}" var="item3">
+                                                                <td>${!item3}</td>
+                                                            </apex:repeat>
+                                                        </tr>
+                                                    </apex:repeat>
+                                            </table>
+                                        </div>    
+                                    </div>
+                                    <!--------------- CAPITATION TABLE ENDS--------------------------------->
+                                </div>
+                                <!---------------TIERING TABLE STARTS------------------------------------------------->
+                                <div  style="{!IF(item.tieringDataWrapper.size > 0, 'page-break-before:avoid;', 'display: none;') }">
+                                    <div>
+                                            <h4 style="font-family: Arial, Helvetica, sans-serif; padding-left : 10px;">{!item.regionName}- Tiering Table- {!prowrap.title}</h4>
+                                    </div>
+                                    <div  style="{!IF(item.tieringDataWrapper.size > 40, 'page-break-before:always;', '') }">
+                                      <table class="irTable" style="-fs-table-paginate: paginate;width: 100%">
+                                            <!-- Main Column creation -->
+                                            <tr>
+                                                <th class="irTableth" title="Panel Size">Panel Size</th>
+                                                <th class="irTableth" title="Membership">Membership</th>
+                                                <th class="irTableth" title="Selection">Selection</th>
+                                                <th class="irTableth" title="Medicare Rate">Medicare Rate</th>
+                                                <th class="irTableth" title="Selection">Selection</th>
+                                                <th class="irTableth" title="Dually Enrolled Rate">Dually Enrolled Rate</th>
+                                            </tr>
+                                            <apex:repeat value="{!item.tieringDataWrapper}" var="item2">
+                
+                                                <tr>
+                                                    <td rowspan="{!item2.rowSpan}" style="{!IF(item2.rowSpan ==+ 0, 'display:none;', '') }">{!item2.panelSize}</td>
+                                                    <td>{!item2.membership}</td>
+                                                    <td rowspan="{!item2.rowSpan}" style="{!IF(item2.rowSpan == 0, 'display:none;', '') }">
+                                                        <apex:outputPanel rendered="{!item2.MediCheck}">
+                                                            Yes
+                                                        </apex:outputPanel>
+                                                        <apex:outputPanel rendered="{!!item2.MediCheck}">
+                                                            No
+                                                        </apex:outputPanel>
+                
+                                                    </td>
+                                                    <td>
+                                                        <apex:outputText value="${0, number,##.00}">
+                                                            <apex:param value="{!item2.MediValue}" />
+                                                        </apex:outputText>
+                                                    </td>
+                                                    <td rowspan="{!item2.rowSpan}" style="{!IF(item2.rowSpan == 0, 'display:none;', '') }">
+                                                        <apex:outputPanel rendered="{!item2.DualCheck}">
+                                                            Yes
+                                                        </apex:outputPanel>
+                                                        <apex:outputPanel rendered="{!!item2.DualCheck}">
+                                                            No
+                                                        </apex:outputPanel>
+                
+                                                    </td>
+                                                    <td>
+                                                        <apex:outputText value="${0, number,##.00}">
+                                                            <apex:param value="{!item2.DualValue}" />
+                                                        </apex:outputText>
+                                                    </td>
+                                                </tr>                
+                                            </apex:repeat>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!------------------------------- TIERING TABLE ENDS---------------------------------->
+                            </apex:repeat>
+                        </apex:pageBlock>
+                   
+                </apex:form>
+                <!--------------- TABLES ENDS HERE--------------------------------->
+            </apex:repeat>
+        </apex:pageBlock>
+
+        
+        
+        <!-- RELATIONSHIPS TABLE START -->
+        <div style="{!IF(junctionWrapList.size > 0 , 'page-break-before:always;', 'display: none;') }">
+            <div>
+                <h2 style="font-family: Arial, Helvetica, sans-serif; padding-left : 10px;">Relationships Table</h2>
+            </div>
+            <table>
+                <tr>
+                    <th>Provider</th>
+                    <th>Site</th>
+                    <th>Street</th>
+                    <th>Effective Date</th>
+                    <th>Term Date</th>
+                    <th>IDX Action</th>
+                </tr>
+                <apex:repeat value="{!junctionWrapList}" var="jun">
+                    <tr>
+                        <td>{!jun.providerName}</td>
+                        <td>{!jun.siteName}</td>
+                        <td>{!jun.siteStreet}</td>
+                        <td>{!jun.pdfEffectiveDate}</td>
+                        <td>{!jun.pdfTermDate}</td>
+                        <td class="{! if(jun.idxAction == 'Term', 'orange',if(jun.idxAction == 'Add', 'green', ''))}">{!jun.idxAction}</td>
+                    </tr>
+                </apex:repeat>
+            </table>
+        </div><br/>
+        
+        
+        
+        <!-- RMS Grid TABLE START -->
+		<div style="{!IF(listOfDataLists.size > 0 , 'page-break-before:always;', 'display: none;') }">
+			<div>
+                <h2 style="font-family: Arial, Helvetica, sans-serif; padding-left : 10px;">RMS Status Worksheet</h2>
+            </div>
+
+    		<apex:variable value="{!-1}" var="count"/>
+            <div style="page-break">
+    		<apex:repeat value="{!listOfDataLists}" var="psfProv">
+                <apex:variable var="count" value="{!count+1}"/>
+                <div style="{!IF(count != 0 , 'page-break-before:always;', '') }">
+                    <div>
+                        <p style="font-family: Arial; font-size: 11px;">Provider : <b>{!providerNameList[count]}</b></p>
+                        <p style="font-family: Arial; font-size: 11px;">Vendor : <b>{!vendorNameList[count]}</b></p>
+                        <p style="font-family: Arial; font-size: 11px;">Version : <b>{!versionNameList[count]}</b></p>
+                    </div>
+        
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                        <thead>
+                            <tr>
+                                <th class="slds-size_3-of-10" scope="col">
+                                    <div class="slds-truncate" title="IPAs">Pod Name</div>
+                                </th>
+                                <apex:repeat value="{!listOfSpecLists[count]}" var="spec1">
+                                    <th>{!spec1}</th>
+                                </apex:repeat>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <apex:repeat value="{!listOfDataLists[count]}" var="item">
+                                <tr class="slds-hint-parent">
+                                    <td class="slds-size_3-of-10">
+                                        <div>
+                                            <apex:outputText value="{!item["Pod"]}" /> 
+                                        </div>
+                                    </td>
+                                    <apex:repeat value="{!item["Specs"]}" var="spec2">
+                                        <td class="{!spec2["ColorClass"]}">
+                                            <div>
+                                                <apex:outputText value="{!spec2["Status"]}"/>
+                                            </div>
+                                        </td>
+                                    </apex:repeat>
+                                </tr>
+                            </apex:repeat>
+                        </tbody>
+                    </table><br/>
+                </div>
+ 			</apex:repeat>
+            </div>
+        </div> 
+        
+        </body>
+    </html>
+</apex:page>

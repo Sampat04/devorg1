@@ -1,0 +1,31 @@
+<apex:page docType="html-5.0" controller="A4c" >
+<apex:form >
+
+    <apex:input type="date" value="{!mydate}"/>
+    
+        <apex:commandButton value="SEARCH" action="{!save1}"/>
+
+    <apex:pageBlock >
+          
+        <apex:pageBlockTable value="{!options}" var="v">      
+            <apex:column >                       
+                 <apex:commandLink action="{!display}"> 
+                     {!v.id}
+                     <apex:param value="{!v.id}" name="id"/>
+                 </apex:commandLink>                         
+            </apex:column>      
+            {!options1}            
+        </apex:pageBlockTable>
+               
+        <apex:pageBlockTable value="{!wc}" var="v1">
+            <apex:column value="{!v1.aname.name}" headerValue="Assignment Name"/>    
+            <apex:column value="{!v1.aname.contact__r.firstname}" headerValue="Contact Name"/> 
+            <apex:column value="{!v1.hrs}" headerValue="No of Hours Worked"/>    
+                 
+ 
+        </apex:pageBlockTable>
+           
+    </apex:pageBlock>
+    
+</apex:form>
+</apex:page>

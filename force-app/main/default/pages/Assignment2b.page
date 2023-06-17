@@ -1,0 +1,20 @@
+<apex:page standardController="Employee__c" recordSetVar="emp" extensions="Assignment2b">
+
+<apex:form >
+<apex:pageBlock >
+    <apex:pageblockTable value="{!emp}" var="con">
+        <apex:column >
+            <apex:commandLink action="{!fetchfunc}">
+                {!con.id}
+                <apex:param name="id" value="{!con.id}"/>
+            </apex:commandLink>     
+        </apex:column>   
+        <apex:column value="{!con.FName__c}"/>  
+        <apex:column value="{!con.LName__c}"/>   
+        <apex:column />
+    </apex:pageblockTable>
+</apex:pageBlock>
+
+</apex:form>
+
+</apex:page>

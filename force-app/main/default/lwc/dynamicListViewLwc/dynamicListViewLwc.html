@@ -1,0 +1,43 @@
+<template>
+   
+    <div class="slds-grid slds-wrap slds-p-top_medium listmaindiv" 
+    style="background-color: #f1f0f0;padding: 5px;">
+        <div class="slds-col slds-size_3-of-4 slds-small-size_2-of-6 slds-medium-size_2-of-6 
+        slds-large-size_3-of-12 picklistpadding">           
+            <lightning-input class="slds-select" onchange={onListViewChange}></lightning-input>
+        </div>
+        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_6-of-6 
+        slds-large-size_12-of-12 listviewcls">
+            <template if:true={listViewNameNotNull}>
+                {body}
+            </template>
+        </div>
+    </div>
+
+</template>
+
+<!--
+<aura:component controller="PSL_sObjectListViewCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="sObjectName" type="String" default="Lead"/>
+    <aura:attribute name="ListViews" type="String"/>
+    <aura:attribute name="LoadAllListView" type="Boolean" default="false"/>
+    <aura:attribute name="rows" type="Integer" default="25"/>
+    <aura:attribute name="showSearchBar" type="Boolean" default="true"/>
+    <aura:attribute name="showActionBar" type="Boolean" default="false"/>
+    <aura:attribute name="enableInlineEdit" type="Boolean" default="true"/>
+    <aura:attribute name="showRowLevelActions" type="Boolean" default="false"/>
+    <aura:attribute name="listViewName" type="String" default="Working"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <div class="slds-grid slds-wrap slds-p-top_medium listmaindiv" style="background-color: #f1f0f0;padding: 5px;">
+        <div class="slds-col slds-size_3-of-4 slds-small-size_2-of-6 slds-medium-size_2-of-6 slds-large-size_3-of-12 picklistpadding">
+            <ui:inputSelect aura:id="lviews" class="slds-select" change="{!c.onListViewChange}"/>
+        </div>
+        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_6-of-6 slds-large-size_12-of-12 listviewcls">
+            <aura:If isTrue="{!v.listViewName != null}"> 
+                {!v.body}                    
+            </aura:If> 
+        </div>
+    </div>
+  
+</aura:component>-->

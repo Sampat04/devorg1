@@ -1,0 +1,195 @@
+<apex:page renderAs="advanced_pdf" showHeader="false" sidebar="false" applyBodyTag="false" applyHtmlTag="false"
+           standardController="RMS_Version__c" extensions="RmsGridController">
+    <head>
+        <style type="text/css">
+            @page {
+            /*size: A4 landscape;*/
+            margin: 7mm;
+            border: 0.7px solid black;
+            padding-around: 5px;
+            padding-top: 5px;
+            }
+            
+            @page {
+            @top-center {
+            content : "{!providerName}";
+            font-size : 12px;
+            color : #595959;
+            font-family : Arial, Helvetica, sans-serif;
+            }
+            
+            @top-left {
+            content: element(pageHeader);
+            }
+            
+            @bottom-left {
+            content: "Page " counter(page) " of " counter(pages);
+            font-size: 10px;
+            color: #595959;
+            font-family: Arial, Helvetica, sans-serif;
+            }
+            }
+            
+            @page: last {
+            display: none
+            }
+            
+            table {
+            border: 0.5px solid black;
+            border-collapse: collapse !important;
+            width: 100%;
+            -fs-table-paginate: paginate;
+            border-spacing: 0;
+            }
+            
+            th {
+            border: 0.5px solid black;
+            border-collapse: collapse !important;
+            font-weight: bold;
+            text-align: left;
+            color: black;
+            padding: 5px;
+            background-color: #65C4B3;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 10px;
+            }
+            
+            /* <!--#66b3ff--> */
+            
+            td {
+            border: 0.5px solid black;
+            border-collapse: collapse !important;
+            padding: 5px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 10px;
+            }
+            
+            tr,
+            .tr_pagebreak {
+            page-break-inside: avoid;
+            page-break-after: auto;
+            }
+            
+            .page-break {
+            display: block;
+            page-break-after: always;
+            }
+            
+            .tdBold {
+            font-weight: bold;
+            text-align: left;
+            vertical-align: baseline;
+            }
+            
+            .irTable {
+            width: 100%;
+            border-collapse: collapse !important;
+            }
+            
+            .irTableth {
+            border-collapse: collapse !important;
+            padding-around: 2px;
+            height: auto;
+            /* min-width: 65px; */
+            width: 65px;
+            text-align: center;
+            }
+            
+            .irTabletd {
+            border-collapse: collapse !important;
+            padding-around: 2px;
+            width: 12px;
+            height: 12px;
+            text-align: right;
+            }
+            
+            .TieTableth {
+            text-align: center;
+            }
+            
+            .TieTabletd {
+            text-align: right;
+            }
+            
+            h2 {
+            font-size: 20px;
+            }
+            
+            h4 {
+            font-size: 14px;
+            }
+            
+            h5 {
+            font-size: 12px;
+            }
+            
+            #pageHeader {
+            position: running(pageHeader);
+            padding-top: 3px;
+            padding-bottom: 3px;
+            padding-left: 10px;
+            
+            }
+            
+            .orange {
+            background: orange;
+            }
+            
+            .Green {
+            background: #85ff7a;
+            }
+            
+            .Grey {
+            background: #bcbcbc;
+            }
+            
+            
+        </style>
+    </head>
+    
+    <body>
+        <div id="pageHeader">
+            <img src="{!URLFOR($Resource.optum_logo_watermark)}" width="75px" height="20px"/>
+        </div>
+        
+        <div style="{!IF(pnaList.size > 0 , '', 'display: none;') }">
+            <div>
+                <h2 style="font-family: Arial, Helvetica, sans-serif; padding-left : 10px;">RMS Status Worksheet</h2>
+                <p style="font-family: Arial;">Provider : <b>{!providerName}</b></p>
+                <p style="font-family: Arial;">Vendor : <b>{!vendorName}</b></p>
+                <p style="font-family: Arial;">Version : <b>{!versionName}</b></p>
+            </div>
+
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead>
+                    <tr>
+                        <th class="slds-size_3-of-10" scope="col">
+                            <div class="slds-truncate" title="IPAs">Pod Name</div>
+                        </th>
+                        <apex:repeat value="{!specList}" var="spec1">
+                            <th>{!spec1}</th>
+                        </apex:repeat>
+                    </tr>
+                </thead>
+                <tbody>
+                    <apex:repeat value="{!dataList}" var="item">
+                        <tr class="slds-hint-parent">
+                            <td class="slds-size_3-of-10">
+                                <div>
+                                    <apex:outputText value="{!item["Pod"]}" /> 
+                                </div>
+                            </td>
+                            <apex:repeat value="{!item["Specs"]}" var="spec2">
+                                <td class="{!spec2["ColorClass"]}">
+                                    <div>
+                                        <apex:outputText value="{!spec2["Status"]}"/>
+                                    </div>
+                                </td>
+                            </apex:repeat>
+                        </tr>
+                    </apex:repeat>
+                </tbody>
+            </table>
+        </div> 
+    </body>
+</apex:page>

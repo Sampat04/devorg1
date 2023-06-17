@@ -1,0 +1,29 @@
+<apex:page controller="Learn1">
+    <apex:form >
+        <apex:inputText value="{!name}"/><br/>
+        <apex:inputText value="{!email}"/><br/>
+        
+        <apex:commandButton action="{!createContact}" value="CREATE CONTACT"/>
+        
+        <apex:commandButton action="{!moveToPage1}" value="MOVE TO PAGE 1"/><br/><br/>
+        <apex:inputText value="{!searchString}"/><br/>    
+        <apex:commandButton action="{!search}" value="SEARCH"/>
+        
+        <apex:pageBlock >
+            <apex:pageBlockTable value="{!listofAcc}" var="c">
+                
+                <apex:column >
+                    <apex:commandlink value="{!c.name}">
+                        <apex:param name="p1" value="{!c.id}"/>
+                    </apex:commandlink>
+                </apex:column>
+                
+                <apex:column value="{!c.name}"/>
+            </apex:pageBlockTable>       
+        </apex:pageBlock>
+        
+    </apex:form>
+    
+    <apex:detail subject="{!$CurrentPage.parameters.p1}"/>
+    
+</apex:page>

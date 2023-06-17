@@ -1,0 +1,24 @@
+<apex:page standardController="account" recordSetVar="acc" extensions="ext4a">
+<apex:form >
+    <apex:pageBlock >    
+        <apex:pageBlockTable value="{!acc}" var="a">
+        
+            <apex:column value="{!a.name}"/>
+            <apex:column value="{!a.type}"/>
+            <apex:column value="{!a.site}"/>
+            <apex:column value="{!a.ownership}"/>
+  
+        </apex:pageBlockTable>
+        
+        <apex:commandbutton action="{!First}" value="<<" rendered="{!HasPrevious}"/> 
+
+        <apex:commandbutton action="{!Previous}" value="<" rendered="{!HasPrevious}"/> 
+        <apex:commandbutton action="{!Next}" value=">" rendered="{!HasNext}"/>   
+        
+        <apex:commandbutton action="{!Last}" value=">>" rendered="{!HasNext}"/>   
+        
+        
+    </apex:pageBlock>
+ </apex:form>
+
+</apex:page>
