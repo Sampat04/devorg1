@@ -1,3 +1,4 @@
+//comment #1
 public with sharing class A6a {
 
 public String country1 {get;set;}
